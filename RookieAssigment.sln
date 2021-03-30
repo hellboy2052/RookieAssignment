@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{1D7BACA7-3A45-4809-944F-447816CF21F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareVM", "ShareVM\ShareVM.csproj", "{457F7E27-30D8-48D8-8950-B58E0DB00309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{1D7BACA7-3A45-4809-944F-447816CF21F5}.Release|x64.Build.0 = Release|Any CPU
 		{1D7BACA7-3A45-4809-944F-447816CF21F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D7BACA7-3A45-4809-944F-447816CF21F5}.Release|x86.Build.0 = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|x64.Build.0 = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Debug|x86.Build.0 = Debug|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|x64.ActiveCfg = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|x64.Build.0 = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|x86.ActiveCfg = Release|Any CPU
+		{457F7E27-30D8-48D8-8950-B58E0DB00309}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

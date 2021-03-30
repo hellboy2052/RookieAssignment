@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210329092546_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210330034541_InitialDB")]
+    partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,11 +45,14 @@ namespace API.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
