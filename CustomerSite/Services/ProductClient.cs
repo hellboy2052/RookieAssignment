@@ -29,5 +29,13 @@ namespace CustomerSite.Services
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<ProductVm>();
         }
+
+        public async Task<IList<ProductVm>> GetProductByCategory(string n)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:5002/Products/category?n={n}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<IList<ProductVm>>();
+        }
     }
 }

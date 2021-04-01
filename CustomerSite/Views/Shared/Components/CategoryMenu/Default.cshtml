@@ -3,5 +3,5 @@
 
 @foreach (var category in Model)
 {
-    <a href="#" class="dropdown-item">@category.Name</a>
+    <a asp-controller="home" asp-action="category" asp-route-n="@category.Name" class="dropdown-item">@category.Name</a>
 }

@@ -24,14 +24,25 @@ namespace CustomerSite.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _productClient.GetProducts();
+            
             return View(products);
         }
-        
-        
+
+
         public async Task<IActionResult> product(int id)
         {
             var product = await _productClient.GetProduct(id);
             return View(product);
+        }
+
+        public async Task<IActionResult> category(string n)
+        {
+            var products = await _productClient.GetProductByCategory(n);
+
+            if(products == null) return View(await _productClient.GetProducts());
+            
+            ViewBag.category = n;
+            return View(products);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

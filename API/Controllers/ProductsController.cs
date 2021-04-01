@@ -36,24 +36,47 @@ namespace API.Controllers
         {
             var product = await _myDbContext.Products.FindAsync(id);
 
-            if(product == null) return NotFound();
+            if (product == null) return NotFound();
 
-            var productVm = new ProductVm{
+            var productVm = new ProductVm
+            {
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
                 Image = product.Image
             };
-            
+
             return productVm;
         }
 
-        
-        [HttpPost]
-        public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm){
+        [HttpGet("category")]
+        public async Task<ActionResult<IList<ProductVm>>> GetByCategory(string n)
+        {
+            var Category = await _myDbContext.Categories.Where(x => x.Name == n)
+                                                        .Select(x => x)
+                                                        .FirstOrDefaultAsync<Category>();
 
-            var product = new Product{
+            if (Category == null) return null;
+
+            return await _myDbContext.Products.Where(x => x.CategoryId == Category.Id).Select(x => new ProductVm
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                Description = x.Description,
+                Image = x.Image
+            }).ToListAsync();
+
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm)
+        {
+
+            var product = new Product
+            {
                 Name = productFormVm.Name,
                 Price = productFormVm.Price,
                 Description = productFormVm.Description,
