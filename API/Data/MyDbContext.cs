@@ -11,6 +11,6 @@ namespace API.Data
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

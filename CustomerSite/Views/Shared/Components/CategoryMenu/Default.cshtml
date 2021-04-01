@@ -1,0 +1,7 @@
+@model IList<ShareVM.CategoryVm>
+
+
+@foreach (var category in Model)
+{
+    <a href="#" class="dropdown-item">@category.Name</a>
+}

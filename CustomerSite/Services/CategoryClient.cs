@@ -5,21 +5,21 @@ using ShareVM;
 
 namespace CustomerSite.Services
 {
-    public class BrandClient : IBrandClient
+    public class CategoryClient : ICategoryClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public BrandClient(IHttpClientFactory httpClientFactory)
+        public CategoryClient(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IList<BrandVm>> GetBrands()
+        public async Task<IList<CategoryVm>> GetCategories()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5002/Brands");
+            var response = await client.GetAsync("https://localhost:5002/Categories");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<IList<BrandVm>>();
+            return await response.Content.ReadAsAsync<IList<CategoryVm>>();
         }
     }
 }

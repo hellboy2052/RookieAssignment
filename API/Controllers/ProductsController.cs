@@ -26,7 +26,8 @@ namespace API.Controllers
                 Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
-                Description = x.Description
+                Description = x.Description,
+                Image = x.Image
             }).ToListAsync();
         }
 
@@ -41,7 +42,8 @@ namespace API.Controllers
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
-                Description = product.Description
+                Description = product.Description,
+                Image = product.Image
             };
             
             return productVm;
@@ -55,7 +57,8 @@ namespace API.Controllers
                 Name = productFormVm.Name,
                 Price = productFormVm.Price,
                 Description = productFormVm.Description,
-                BrandId = productFormVm.BrandId
+                Image = productFormVm.Image,
+                CategoryId = productFormVm.CategoryId
             };
 
             _myDbContext.Products.Add(product);

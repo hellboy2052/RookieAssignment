@@ -4,11 +4,61 @@
     ViewData["Title"] = $"Product of {Model.Name}";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<link rel="stylesheet" href="~/css/singleProduct.css">
+<link rel="stylesheet" href="~/lib/scss/timber.scss.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+<div class="wrapper">
+    <main>
+        <div id="shopify-section-product-template" class="shopify-section">
+            <div class="single-product-area mt-80 mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="product-details-large" id="ProductPhoto">
+                                <img id="ProductPhotoImg" class="product-zoom" src="~/img/main-image/@Model.Image" />
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="single-product-content">
+                                <form method="post" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
+                                    <div class="product-details">
+                                        <h1 class="single-product-name">
+                                            @Model.Name
+                                        </h1>
+                                        <div class="single-product-reviews">
+                                            <span class="shopify-product-reviews-badge" data-id="1912078270534"></span>
+                                        </div>
+                                        <div class="single-product-price">
+                                            <div class="product-discount">
+                                                <span class="price" id="ProductPrice"><span class="money">@Model.Price</span></span>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            @Model.Description
+                                        </div>
 
-<p>@Model.Name</p>
-<p>@Model.Price</p>
-<p>@Model.Description</p>
+                                        <div class="single-product-action">
+                                            <div class="product-add-to-cart">
+                                                <span class="control-label">Quantity</span>
+                                                <div class="cart-plus-minus">
+                                                    <input class="cart-plus-minus-box" type="text" name="quantity" value="1" />
+                                                </div>
+                                                <div class="add">
+                                                    <button type="submit" class="add-to-cart ajax-spin-cart" id="AddToCart">
+                                                        <i class="ion-bag"></i>
+                                                        <span class="list-cart-title cart-title" id="AddToCartText">Add to cart</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

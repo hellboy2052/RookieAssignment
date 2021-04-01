@@ -1,6 +1,6 @@
-namespace ShareVM
+namespace API.models
 {
-    public class BrandVm
+    public class Category
     {
         public int Id { get; set; }
 

@@ -4,9 +4,9 @@ using ShareVM;
 
 namespace CustomerSite.Services
 {
-    public interface IBrandClient
+    public interface ICategoryClient
     {
-        Task<IList<BrandVm>> GetBrands();
+        Task<IList<CategoryVm>> GetCategories();
         
     }
 }
