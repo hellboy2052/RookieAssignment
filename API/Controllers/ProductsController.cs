@@ -50,50 +50,50 @@ namespace API.Controllers
             return productVm;
         }
 
-        [HttpGet("category")]
-        public async Task<ActionResult<IList<ProductVm>>> GetByCategory(string n)
-        {
-            // var Category = await _myDbContext.Categories.Where(x => x.Name == n)
-            //                                             .Select(x => x)
-            //                                             .FirstOrDefaultAsync<Category>();
+        // [HttpGet("category")]
+        // public async Task<ActionResult<IList<ProductVm>>> GetByCategory(string n)
+        // {
+        //     // var Category = await _myDbContext.Categories.Where(x => x.Name == n)
+        //     //                                             .Select(x => x)
+        //     //                                             .FirstOrDefaultAsync<Category>();
 
-            // if (Category == null) return null;
+        //     // if (Category == null) return null;
 
-            // return await _myDbContext.Products.Where(x => x.CategoryId == Category.Id).Select(x => new ProductVm
-            // {
-            //     Id = x.Id,
-            //     Name = x.Name,
-            //     Price = x.Price,
-            //     Description = x.Description,
-            //     Image = x.Image
-            // }).ToListAsync();
+        //     // return await _myDbContext.Products.Where(x => x.CategoryId == Category.Id).Select(x => new ProductVm
+        //     // {
+        //     //     Id = x.Id,
+        //     //     Name = x.Name,
+        //     //     Price = x.Price,
+        //     //     Description = x.Description,
+        //     //     Image = x.Image
+        //     // }).ToListAsync();
             
-            return Ok();
+        //     return Ok();
 
-        }
+        // }
 
 
-        [HttpPost]
-        public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm)
-        {
+        // [HttpPost]
+        // public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm)
+        // {
 
-            // var product = new Product
-            // {
-            //     Name = productFormVm.Name,
-            //     Price = productFormVm.Price,
-            //     Description = productFormVm.Description,
-            //     Image = productFormVm.Image,
-            //     CategoryId = productFormVm.CategoryId
-            // };
+        //     // var product = new Product
+        //     // {
+        //     //     Name = productFormVm.Name,
+        //     //     Price = productFormVm.Price,
+        //     //     Description = productFormVm.Description,
+        //     //     Image = productFormVm.Image,
+        //     //     CategoryId = productFormVm.CategoryId
+        //     // };
 
-            // _myDbContext.Products.Add(product);
+        //     // _myDbContext.Products.Add(product);
 
-            // await _myDbContext.SaveChangesAsync();
+        //     // await _myDbContext.SaveChangesAsync();
 
-            // return Accepted();
+        //     // return Accepted();
 
-            return Ok();
-        }
+        //     return Ok();
+        // }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)

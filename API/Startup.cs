@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
+using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +65,7 @@ namespace API
                         ValidateAudience = true,
                     };
                 });
+            services.AddScoped<TokenService>();
 
             
 
