@@ -7,7 +7,7 @@ using API.core;
 using API.Data;
 using API.models;
 using API.Services;
-using API.Services.Product;
+using API.Services.Products;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

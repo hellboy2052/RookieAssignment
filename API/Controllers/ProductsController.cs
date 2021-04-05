@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
-using API.Services.Product;
+using API.Services.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -29,72 +29,22 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductVm>> GetProduct(int id)
         {
-            var product = await _myDbContext.Products.FindAsync(id);
-
-            if (product == null) return NotFound();
-
-            var productVm = new ProductVm
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                Image = product.Image
-            };
-
-            return productVm;
+            return await Mediator.Send(new Detail.Query{Id = id});
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm)
+        public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
         {
 
 
-            var product = new Product
-            {
-                Name = productFormVm.Name,
-                Price = productFormVm.Price,
-                Description = productFormVm.Description,
-                Image = productFormVm.Image,
-                BrandId = productFormVm.BrandId,
-                CreatedDate = DateTime.Now
-            };
-
-            foreach (var cate in productFormVm.CategoryName)
-            {
-                var category = await _myDbContext.Categories
-                    .FirstOrDefaultAsync(x => x.Name == cate);
-
-                if (category == null) return BadRequest("Invalid category");
-
-                product.ProductCategories.Add(
-                    new CategoryProduct
-                    {
-                        Category = category,
-                        Product = product
-                    }
-                );
-            }
-
-            _myDbContext.Add(product);
-
-            await _myDbContext.SaveChangesAsync();
-
-            return Accepted();
+            return Ok(await Mediator.Send(new Create.Command{product = productFormVm}));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
-            var Product = await _myDbContext.Products.FindAsync(id);
 
-            if (Product == null) return NotFound();
-
-            _myDbContext.Products.Remove(Product);
-
-            await _myDbContext.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
+using API.Services.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -21,54 +22,25 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CategoryVm>>> GetCategories()
         {
-            return await _myDbContext.Categories.Select(x => new CategoryVm
-            {
-                Id = x.Id,
-                Name = x.Name
-            }).ToListAsync();
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CategoryVm>> GetCategory(int id)
         {
-            var Category = await _myDbContext.Categories.FindAsync(id);
-
-            if(Category == null) return NotFound();
-
-            var CategoryVm = new CategoryVm{
-                Id = Category.Id,
-                Name = Category.Name
-            };
-
-            return CategoryVm;
+            return await Mediator.Send(new Detail.Query{Id = id});
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateCategory(CategoryFormVm CategoryFormVm){
 
-            var Category = new Category{
-                Name = CategoryFormVm.Name
-            };
-
-            _myDbContext.Categories.Add(Category);
-
-            await _myDbContext.SaveChangesAsync();
-
-            return Accepted();
+            return Ok(await Mediator.Send(new Create.Command{categoryFormVm = CategoryFormVm}));
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
-            var Category = await _myDbContext.Categories.FindAsync(id);
-
-            if (Category == null) { return NotFound(); };
-
-            _myDbContext.Categories.Remove(Category);
-
-            await _myDbContext.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

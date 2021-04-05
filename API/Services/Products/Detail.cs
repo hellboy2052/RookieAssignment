@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
@@ -8,16 +7,16 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
 
-namespace API.Services.Product
+namespace API.Services.Products
 {
-    public class List
+    public class Detail
     {
-        public class Query : IRequest<List<ProductVm>>
+        public class Query : IRequest<ProductVm>
         {
-
+            public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, List<ProductVm>>
+        public class Handler : IRequestHandler<Query, ProductVm>
         {
             private readonly MyDbContext _context;
             private readonly IMapper _mapper;
@@ -27,13 +26,14 @@ namespace API.Services.Product
                 this._context = context;
             }
 
-            public async Task<List<ProductVm>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ProductVm> Handle(Query request, CancellationToken cancellationToken)
             {
-                var products = await _context.Products
+                var product = await _context.Products
                     .ProjectTo<ProductVm>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+                if(product == null) return null;
 
-                return products;
+                return product;
             }
         }
     }

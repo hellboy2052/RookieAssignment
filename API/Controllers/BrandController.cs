@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
+using API.Services.Brands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -21,57 +22,26 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BrandVm>>> GetBrands()
         {
-            return await _context.Brands.Select(x => new BrandVm
-            {
-                Id = x.Id,
-                Name = x.Name,
-            }).ToListAsync();
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<BrandVm>> GetBrand(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-
-            if (brand == null) return NotFound();
-
-            var brandVm = new BrandVm { Name = brand.Name };
-
-            return brandVm;
+            return await Mediator.Send(new Detail.Query{Id = id});
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBrand(BrandFormVm brandFormVm)
         {
-            var brand = new Brand
-            {
-                Name = brandFormVm.Name
-            };
-
-            _context.Brands.Add(brand);
-
-            var result = await _context.SaveChangesAsync() > 0;
-
-            if (result) return Accepted();
-
-            return BadRequest();
+            return Ok(await Mediator.Send(new Create.Command{brandFormVm = brandFormVm}));
 
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrand(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-
-            if (brand == null) return NotFound();
-
-            _context.Brands.Remove(brand);
-
-            var result = await _context.SaveChangesAsync() > 0;
-
-            if (result) return NoContent();
-
-            return BadRequest();
+            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
 
         }
 
