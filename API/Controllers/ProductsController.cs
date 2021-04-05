@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
+using API.Services.Product;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -22,16 +23,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductVm>>> GetProducts()
         {
-            return await _myDbContext.Products.Include(p => p.ProductCategories).Select(x => new ProductVm
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                Description = x.Description,
-                Image = x.Image,
-                Brand = x.Brand.Name
-                
-            }).ToListAsync();
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]

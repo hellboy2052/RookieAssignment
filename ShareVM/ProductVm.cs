@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ShareVM
 {
     public class ProductVm
@@ -12,6 +14,8 @@ namespace ShareVM
 
         public string Image { get; set; }
 
-        public string Brand { get; set; }
+        public string BrandName { get; set; }
+
+        public ICollection<CategoryVm> ProductCategories { get; set; }
     }
 }

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using API.core;
 using API.Data;
 using API.models;
 using API.Services;
+using API.Services.Product;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +47,10 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+
+            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
 
             services.AddIdentityCore<User>(option => {
                 option.SignIn.RequireConfirmedEmail = false;
