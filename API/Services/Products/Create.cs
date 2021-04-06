@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using API.models;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -14,6 +15,14 @@ namespace API.Services.Products
         public class Command : IRequest<ResultVm<Unit>>
         {
             public ProductFormVm product { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator(MyDbContext context)
+            {
+                RuleFor(x => x.product).SetValidator(new ProductValidator(context));
+            }
         }
 
         public class Handler : IRequestHandler<Command, ResultVm<Unit>>
@@ -41,8 +50,6 @@ namespace API.Services.Products
                     var category = await _context.Categories
                         .FirstOrDefaultAsync(x => x.Name == cate);
 
-                    if (category == null) return ResultVm<Unit>.Failure("Invalid Category -> " + cate);
-
                     product.ProductCategories.Add(
                         new CategoryProduct
                         {
@@ -56,7 +63,7 @@ namespace API.Services.Products
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return ResultVm<Unit>.Failure("Failed to create Product");
+                if (!result) return ResultVm<Unit>.Failure("Failed to create Product");
 
                 return ResultVm<Unit>.Success(Unit.Value);
             }
