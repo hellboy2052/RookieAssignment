@@ -2,17 +2,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using MediatR;
+using ShareVM;
 
 namespace API.Services.Products
 {
     public class Delete
     {
-        public class Command : IRequest<Unit>
+        public class Command : IRequest<ResultVm<Unit>>
         {
             public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Unit>
+        public class Handler : IRequestHandler<Command, ResultVm<Unit>>
         {
             private readonly MyDbContext _context;
             public Handler(MyDbContext context)
@@ -20,16 +21,18 @@ namespace API.Services.Products
                 this._context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ResultVm<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var Product = await _context.Products.FindAsync(request.Id);
 
-                if (Product == null) return Unit.Value;
+                if (Product == null) return ResultVm<Unit>.Failure("Failed to find a product \r\nIn Deleting process");
 
                 _context.Products.Remove(Product);
 
-                await _context.SaveChangesAsync();
-                return Unit.Value;
+                var result = await _context.SaveChangesAsync() > 0;
+
+                if (!result) return ResultVm<Unit>.Failure("Failed to delete a product");
+                return ResultVm<Unit>.Success(Unit.Value);
             }
         }
     }

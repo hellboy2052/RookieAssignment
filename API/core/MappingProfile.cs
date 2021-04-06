@@ -8,6 +8,11 @@ namespace API.core
     {
         public MappingProfile()
         {
+            //Category
+            CreateMap<Category, CategoryVm>();
+            //Brand
+            CreateMap<Brand, BrandVm>();
+            //Product
             CreateMap<Product, Product>();
             CreateMap<Product, ProductVm>()
                 .ForMember(p => p.BrandName, o => 

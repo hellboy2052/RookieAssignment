@@ -9,12 +9,12 @@ namespace API.Services.Brands
 {
     public class Create
     {
-        public class Command : IRequest<Unit>
+        public class Command : IRequest<ResultVm<Unit>>
         {
             public BrandFormVm brandFormVm { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Unit>
+        public class Handler : IRequestHandler<Command, ResultVm<Unit>>
         {
             private readonly MyDbContext _context;
             public Handler(MyDbContext context)
@@ -22,7 +22,7 @@ namespace API.Services.Brands
                 this._context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ResultVm<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var brand = new Brand{
                     Name = request.brandFormVm.Name
@@ -31,9 +31,9 @@ namespace API.Services.Brands
                 _context.Brands.Add(brand);
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(result) return Unit.Value;
+                if(!result) return ResultVm<Unit>.Failure("Failed to create brand");
 
-                return Unit.Value;
+                return ResultVm<Unit>.Success(Unit.Value);
             }
         }
     }

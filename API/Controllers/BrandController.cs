@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.models;
 using API.Services.Brands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -20,28 +21,30 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BrandVm>>> GetBrands()
+        public async Task<IActionResult> GetBrands()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BrandVm>> GetBrand(int id)
+        public async Task<IActionResult> GetBrand(int id)
         {
-            return await Mediator.Send(new Detail.Query{Id = id});
+            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateBrand(BrandFormVm brandFormVm)
         {
-            return Ok(await Mediator.Send(new Create.Command{brandFormVm = brandFormVm}));
+            return HandleResult(await Mediator.Send(new Create.Command{brandFormVm = brandFormVm}));
 
         }
-
+        
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrand(int id)
         {
-            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
+            return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
 
         }
 

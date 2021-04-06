@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using API.Data;
 using API.models;
 using API.Services.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
 
 namespace API.Controllers
 {
+    
     public class ProductsController : BaseController
     {
         private readonly MyDbContext _myDbContext;
@@ -21,30 +23,31 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductVm>>> GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductVm>> GetProduct(int id)
+        public async Task<IActionResult> GetProduct(int id)
         {
-            return await Mediator.Send(new Detail.Query{Id = id});
+            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
         {
 
 
-            return Ok(await Mediator.Send(new Create.Command{product = productFormVm}));
+            return HandleResult(await Mediator.Send(new Create.Command{product = productFormVm}));
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
 
-            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
+            return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

@@ -11,12 +11,12 @@ namespace API.Services.Products
 {
     public class Detail
     {
-        public class Query : IRequest<ProductVm>
+        public class Query : IRequest<ResultVm<ProductVm>>
         {
             public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, ProductVm>
+        public class Handler : IRequestHandler<Query, ResultVm<ProductVm>>
         {
             private readonly MyDbContext _context;
             private readonly IMapper _mapper;
@@ -26,14 +26,15 @@ namespace API.Services.Products
                 this._context = context;
             }
 
-            public async Task<ProductVm> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ResultVm<ProductVm>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var product = await _context.Products
                     .ProjectTo<ProductVm>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
-                if(product == null) return null;
+                    
+                if(product == null) return ResultVm<ProductVm>.Failure("Product doesnt exist!");
 
-                return product;
+                return ResultVm<ProductVm>.Success(product);
             }
         }
     }

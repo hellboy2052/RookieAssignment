@@ -12,12 +12,12 @@ namespace API.Services.Products
 {
     public class List
     {
-        public class Query : IRequest<List<ProductVm>>
+        public class Query : IRequest<ResultVm<List<ProductVm>>>
         {
 
         }
 
-        public class Handler : IRequestHandler<Query, List<ProductVm>>
+        public class Handler : IRequestHandler<Query, ResultVm<List<ProductVm>>>
         {
             private readonly MyDbContext _context;
             private readonly IMapper _mapper;
@@ -27,13 +27,13 @@ namespace API.Services.Products
                 this._context = context;
             }
 
-            public async Task<List<ProductVm>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ResultVm<List<ProductVm>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var products = await _context.Products
                     .ProjectTo<ProductVm>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
-                return products;
+                return ResultVm<List<ProductVm>>.Success(products);
             }
         }
     }

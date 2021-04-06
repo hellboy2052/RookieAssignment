@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.models;
 using API.Services.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -20,27 +21,29 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CategoryVm>>> GetCategories()
+        public async Task<IActionResult> GetCategories()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryVm>> GetCategory(int id)
+        public async Task<IActionResult> GetCategory(int id)
         {
-            return await Mediator.Send(new Detail.Query{Id = id});
+            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult> CreateCategory(CategoryFormVm CategoryFormVm){
+        public async Task<IActionResult> CreateCategory(CategoryFormVm CategoryFormVm){
 
-            return Ok(await Mediator.Send(new Create.Command{categoryFormVm = CategoryFormVm}));
+            return HandleResult(await Mediator.Send(new Create.Command{categoryFormVm = CategoryFormVm}));
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
-            return Ok(await Mediator.Send(new Delete.Command{Id = id}));
+            return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

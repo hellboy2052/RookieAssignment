@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -11,21 +13,24 @@ namespace API.Services.Brands
 {
     public class List
     {
-        public class Query : IRequest<List<BrandVm>> { }
+        public class Query : IRequest<ResultVm<List<BrandVm>>> { }
 
-        public class Handler : IRequestHandler<Query, List<BrandVm>>
+        public class Handler : IRequestHandler<Query, ResultVm<List<BrandVm>>>
         {
             private readonly MyDbContext _context;
-            public Handler(MyDbContext context)
+            private readonly IMapper _mapper;
+            public Handler(MyDbContext context, IMapper mapper)
             {
+                this._mapper = mapper;
                 this._context = context;
             }
 
-            public async Task<List<BrandVm>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ResultVm<List<BrandVm>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Brands
-                    .Select(x => new BrandVm { Id = x.Id, Name = x.Name })
+                var brands = await _context.Brands
+                    .ProjectTo<BrandVm>(_mapper.ConfigurationProvider)
                     .ToListAsync();
+                return ResultVm<List<BrandVm>>.Success(brands);
             }
         }
     }
