@@ -27,6 +27,7 @@ namespace CustomerSite
             services.AddHttpClient();
             services.AddTransient<IProductClient, ProductClient>();
             services.AddTransient<ICategoryClient, CategoryClient>();
+            services.AddTransient<IBrandClient, BrandClient>();
             services.AddControllersWithViews();
         }
 

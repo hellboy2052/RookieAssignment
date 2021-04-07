@@ -37,12 +37,7 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> category(string n)
         {
-            var products = await _productClient.GetProductByCategory(n);
-
-            if(products == null) return View(await _productClient.GetProducts());
-            
-            ViewBag.category = n;
-            return View(products);
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

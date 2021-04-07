@@ -22,12 +22,14 @@ namespace API.Controllers
             _myDbContext = myDbContext;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetProducts(string category)
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {

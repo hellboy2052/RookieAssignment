@@ -1,7 +1,0 @@
-@model IList<ShareVM.CategoryVm>
-
-
-@foreach (var category in Model)
-{
-    <a asp-controller="home" asp-action="category" asp-route-n="@category.Name" class="dropdown-item">@category.Name</a>
-}

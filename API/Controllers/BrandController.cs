@@ -20,12 +20,14 @@ namespace API.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetBrands()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBrand(int id)
         {
