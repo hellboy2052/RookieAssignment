@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using ShareVM;
 
 namespace CustomerSite.Services
@@ -8,9 +9,11 @@ namespace CustomerSite.Services
     public class ProductClient : IProductClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _config;
 
-        public ProductClient(IHttpClientFactory httpClientFactory)
+        public ProductClient(IHttpClientFactory httpClientFactory, IConfiguration config)
         {
+            _config = config;
             _httpClientFactory = httpClientFactory;
         }
 
@@ -18,14 +21,14 @@ namespace CustomerSite.Services
         public async Task<IList<ProductVm>> GetProducts()
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:5002/Products");
+            var response = await client.GetAsync(_config["API:Default"] + "/Products");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<IList<ProductVm>>();
         }
         public async Task<ProductVm> GetProduct(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:5002/Products/{id}");
+            var response = await client.GetAsync(_config["API:Default"] + $"/Products/{id}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<ProductVm>();
         }

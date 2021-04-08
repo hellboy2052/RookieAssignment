@@ -32,13 +32,13 @@ namespace API.Controllers
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == loginVm.Email);
 
-            if (user == null) return NotFound();
+            if (user == null) return NotFound("Invalid email or password");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginVm.Password, false);
 
             if (result.Succeeded) return createUserObject(user);
 
-            return Unauthorized();
+            return BadRequest("Incorrect password");
         }
 
         [HttpPost("register")]
@@ -67,6 +67,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserVm>> GetCurrentUser()
         {

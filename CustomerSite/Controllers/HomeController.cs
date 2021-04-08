@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
+using CustomerSite.Services.Interface;
 
 namespace CustomerSite.Controllers
 {
@@ -14,9 +15,11 @@ namespace CustomerSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductClient _productClient;
+        private readonly IAccountClient _accountClient;
 
-        public HomeController(ILogger<HomeController> logger, IProductClient productClient)
+        public HomeController(ILogger<HomeController> logger, IProductClient productClient, IAccountClient accountClient)
         {
+            this._accountClient = accountClient;
             _logger = logger;
             _productClient = productClient;
         }
@@ -24,6 +27,10 @@ namespace CustomerSite.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _productClient.GetProducts();
+
+            var user = await _accountClient.getCurrentUser();
+            //check if user currently login or not
+            ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
             
             return View(products);
         }
@@ -31,7 +38,12 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> product(int id)
         {
+            var user = await _accountClient.getCurrentUser();
+            //check if user currently login or not
+            ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+
             var product = await _productClient.GetProduct(id);
+            
             return View(product);
         }
 
