@@ -24,13 +24,15 @@ namespace CustomerSite.Controllers
             _productClient = productClient;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string brand)
         {
-            var products = await _productClient.GetProducts();
-
             var user = await _accountClient.getCurrentUser();
             //check if user currently login or not
             ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+
+            var products = await _productClient.GetProducts();
+
+            if (!string.IsNullOrEmpty(brand)) products = products.Where(x => x.BrandName == brand).Select(x => x).ToList();
             
             return View(products);
         }
@@ -45,11 +47,6 @@ namespace CustomerSite.Controllers
             var product = await _productClient.GetProduct(id);
             
             return View(product);
-        }
-
-        public async Task<IActionResult> category(string n)
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

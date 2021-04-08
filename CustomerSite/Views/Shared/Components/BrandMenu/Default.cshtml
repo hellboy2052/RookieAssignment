@@ -2,5 +2,5 @@
 
 @foreach (var brand in Model)
 {
-    <a class="dropdown-item">@brand.Name</a>
+    <a href="~/?brand=@brand.Name" class="dropdown-item">@brand.Name</a>
 } 
