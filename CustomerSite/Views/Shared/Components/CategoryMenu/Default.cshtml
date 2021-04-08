@@ -1,0 +1,11 @@
+@model IList<ShareVM.CategoryVm>
+
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Category</a>
+    <div class="dropdown-menu">
+        @foreach (var category in Model)
+        {
+            <a href="~/?category=@category.Name" class="dropdown-item">@category.Name</a>
+        }
+    </div>
+</div>

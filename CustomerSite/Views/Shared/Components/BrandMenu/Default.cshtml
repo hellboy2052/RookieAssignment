@@ -1,6 +1,11 @@
 @model IList<ShareVM.BrandVm>
 
-@foreach (var brand in Model)
-{
-    <a href="~/?brand=@brand.Name" class="dropdown-item">@brand.Name</a>
-} 
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Brand</a>
+    <div class="dropdown-menu">
+        @foreach (var brand in Model)
+        {
+            <a href="~/?brand=@brand.Name" class="dropdown-item">@brand.Name</a>
+        }
+    </div>
+</div>

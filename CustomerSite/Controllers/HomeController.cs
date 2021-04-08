@@ -24,7 +24,7 @@ namespace CustomerSite.Controllers
             _productClient = productClient;
         }
 
-        public async Task<IActionResult> Index(string brand)
+        public async Task<IActionResult> Index(string brand, string category)
         {
             var user = await _accountClient.getCurrentUser();
             //check if user currently login or not
@@ -33,6 +33,8 @@ namespace CustomerSite.Controllers
             var products = await _productClient.GetProducts();
 
             if (!string.IsNullOrEmpty(brand)) products = products.Where(x => x.BrandName == brand).Select(x => x).ToList();
+            
+            if(!string.IsNullOrEmpty(category)) products = products.Select(x => x).Where(x => x.ProductCategories.Any(x => x.Name == category)).ToList();
             
             return View(products);
         }
