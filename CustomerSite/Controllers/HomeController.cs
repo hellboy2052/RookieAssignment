@@ -50,6 +50,7 @@ namespace CustomerSite.Controllers
             ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
 
             var product = await _productClient.GetProduct(id);
+            var ra = product.currentRate;
             
             return View(product);
         }
@@ -61,8 +62,11 @@ namespace CustomerSite.Controllers
                return RedirectToAction(actionName: "login", controllerName: "Account");
             }
 
+            // Get value from checked radio
             double rate = double.Parse(frm["rating"]);
-            return Content("hello there - " + rate + " ,pId: " + Id);
+            await _productClient.SetRating(Id, rate);
+            string referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

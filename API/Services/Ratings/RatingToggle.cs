@@ -51,7 +51,7 @@ namespace API.Services.Ratings
                 }
                 else
                 {
-                    _context.Ratings.Remove(rating);
+                    rating.rate = request.rate;
                 }
 
                 var result = await _context.SaveChangesAsync() > 0;
