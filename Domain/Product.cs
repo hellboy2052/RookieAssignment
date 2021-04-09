@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API.models
+namespace Domain
 {
     public class Product
     {
@@ -29,6 +29,12 @@ namespace API.models
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
 
+        public int ratingCount { get; set; }
+
+        public double rating { get; set; }
+
         public ICollection<CategoryProduct> ProductCategories { get; set; } = new List<CategoryProduct>();
+
+        public ICollection<Rating> rate { get; set; } = new List<Rating>();
     }
 }

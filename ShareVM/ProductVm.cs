@@ -17,5 +17,7 @@ namespace ShareVM
         public string BrandName { get; set; }
 
         public ICollection<CategoryVm> ProductCategories { get; set; }
+
+        public ICollection<RatingVm> rate { get; set; }
     }
 }

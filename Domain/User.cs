@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.models
+namespace Domain
 {
     public class User : IdentityUser
     {
@@ -14,5 +15,7 @@ namespace API.models
 
         [PersonalData]
         public string FullName { get; set; }
+
+        public ICollection<Rating> rating { get; set; }
     }
 }

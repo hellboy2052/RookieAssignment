@@ -2,12 +2,12 @@
 
 @{
     ViewData["Title"] = $"Product of {Model.Name}";
+    ViewData["css"] = "/css/productdetail.css";
+    ViewData["js"] = "js/productdetail.js";
 }
 
-<link rel="stylesheet" href="~/css/singleProduct.css">
-<link rel="stylesheet" href="~/lib/scss/timber.scss.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
-<div class="wrapper">
+@* <div class="wrapper">
     
     <main>
         <div id="shopify-section-product-template" class="shopify-section">
@@ -62,4 +62,98 @@
             </div>
         </div>
     </main>
-</div>
+</div> *@
+<!--Section: Block Content-->
+<section class="mb-5">
+   <div class="row">
+      <div class="col-md-6 mb-4 mb-md-0">
+         <div id="mdb-lightbox-ui"></div>
+         <div class="mdb-lightbox">
+            <div class="row product-gallery mx-1">
+               @* Main image *@
+               <div class="col-12 mb-0">
+                  <figure class="view overlay rounded z-depth-1 main-img">
+                     <a href="~/img/main-image/@Model.Image"
+                        data-size="710x823">
+                     <img src="~/img/main-image/@Model.Image"
+                        class="img-fluid z-depth-1">
+                     </a>
+                  </figure>
+               </div>
+               @* Image gallery *@
+               <div class="col-12">
+                  <div class="row">
+                     <div class="col-3">
+                        
+                        <div class="view overlay rounded z-depth-1 gallery-item">
+                           <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
+                              class="img-fluid">
+                           <div class="mask rgba-white-slight"></div>
+                        </div>
+                       
+                     </div>
+                     <div class="col-3">
+                     </div>
+                     <div class="col-3">
+                     </div>
+                     <div class="col-3">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6">
+         @* Title *@
+         <h5>@Model.Name</h5>
+         @* Price *@
+         <p><span class="mr-1"><strong>@Model.Price VND</strong></span></p>
+         @* Rating *@
+         <div class="clearfix">
+             @using (Html.BeginForm("rating", "home", null, FormMethod.Post, false, new {@class = "rating"} )){
+                @Html.HiddenFor(x => x.Id)
+                @Html.RadioButton("rating", 5, false, new { @id = "star5", @name="rating" } )<label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                @Html.RadioButton("rating", 4.5, false, new { @id = "star4half", @name="rating" } )<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                @Html.RadioButton("rating", 4, false, new { @id = "star4", @name="rating" } )<label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                @Html.RadioButton("rating", 3.5, false, new { @id = "star3half", @name="rating" } )<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                @Html.RadioButton("rating", 3, false, new { @id = "star3", @name="rating" } )<label class = "full" for="star3" title="Meh - 3 stars"></label>
+                @Html.RadioButton("rating", 2.5, false, new { @id = "star2half", @name="rating" } )<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                @Html.RadioButton("rating", 2, false, new { @id = "star2", @name="rating" } )<label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                @Html.RadioButton("rating", 1.5, false, new { @id = "star1half", @name="rating" } )<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                @Html.RadioButton("rating", 1, false, new { @id = "star1", @name="rating" } )<label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                @Html.RadioButton("rating", 0.5, false, new { @id = "starhalf", @name="rating" } )<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+            }
+         </div>
+         @* Description *@
+         <p class="pt-1">@Model.Description
+         </p>
+         <hr>
+         <form action="">
+            <div class="table-responsive mb-2">
+                <table class="table table-sm table-borderless">
+                <tbody>
+                    <tr>
+                        <td class="pl-0 pb-0 w-25">Quantity</td>
+                    </tr>
+                    <tr>
+                        <td class="pl-0">
+                            <div class="def-number-input number-input safari_only mb-0">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                class="minus">-</button>
+                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                class="plus">+</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn btn-primary btn-md mr-1 mb-2"><i
+                class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+         </form>
+      </div>
+   </div>
+</section>
+
+<!--Section: Block Content-->

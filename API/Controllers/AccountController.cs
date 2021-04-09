@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using API.models;
+using Domain;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

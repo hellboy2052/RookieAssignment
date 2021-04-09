@@ -1,4 +1,4 @@
-using API.models;
+using Domain;
 using AutoMapper;
 using ShareVM;
 
@@ -8,6 +8,8 @@ namespace API.core
     {
         public MappingProfile()
         {
+            //Rating
+            CreateMap<Rating, RatingVm>();
             //Category
             CreateMap<Category, CategoryVm>();
             //Brand
