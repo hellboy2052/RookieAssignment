@@ -14,10 +14,6 @@ namespace ShareVM
 
         public string Image { get; set; }
 
-        public int ratingCount { get; set; }
-
-        public double rating { get; set; }
-
         public string BrandName { get; set; }
 
         public ICollection<CategoryVm> ProductCategories { get; set; }
