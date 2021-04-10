@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerSite.ViewComponents
 {
-    public class BrandMenuViewComponent : ViewComponent
+    public class BrandMenu : ViewComponent
     {
         private readonly IBrandClient _brandClient;
-
-        public BrandMenuViewComponent(IBrandClient brandClient)
+        public BrandMenu(IBrandClient brandClient)
         {
-            _brandClient = brandClient;
+            this._brandClient = brandClient;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(){

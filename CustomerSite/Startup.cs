@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomerSite.Services;
+using CustomerSite.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace CustomerSite
@@ -24,9 +26,17 @@ namespace CustomerSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookies";
+            })
+            .AddCookie("Cookies");
             services.AddHttpClient();
             services.AddTransient<IProductClient, ProductClient>();
+            services.AddTransient<ICategoryClient, CategoryClient>();
             services.AddTransient<IBrandClient, BrandClient>();
+            services.AddTransient<IAccountClient, AccountClient>();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
         }
 

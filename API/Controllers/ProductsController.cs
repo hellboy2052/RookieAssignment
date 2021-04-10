@@ -1,14 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
-using API.models;
+using Domain;
+using API.Services.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
 
 namespace API.Controllers
 {
+    
     public class ProductsController : BaseController
     {
         private readonly MyDbContext _myDbContext;
@@ -18,65 +22,34 @@ namespace API.Controllers
             _myDbContext = myDbContext;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<List<ProductVm>>> GetProducts()
+        public async Task<IActionResult> GetProducts(string category)
         {
-            return await _myDbContext.Products.Select(x => new ProductVm
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Price = x.Price,
-                Description = x.Description
-            }).ToListAsync();
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductVm>> GetProduct(int id)
+        public async Task<IActionResult> GetProduct(int id)
         {
-            var product = await _myDbContext.Products.FindAsync(id);
-
-            if(product == null) return NotFound();
-
-            var productVm = new ProductVm{
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description
-            };
-            
-            return productVm;
+            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
-        
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult> CreateProduct(ProductFormVm productFormVm){
-
-            var product = new Product{
-                Name = productFormVm.Name,
-                Price = productFormVm.Price,
-                Description = productFormVm.Description,
-                BrandId = productFormVm.BrandId
-            };
-
-            _myDbContext.Products.Add(product);
-
-            await _myDbContext.SaveChangesAsync();
-
-            return Accepted();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
         {
-            var Product = await _myDbContext.Products.FindAsync(id);
 
-            if (Product == null) return NotFound();
 
-            _myDbContext.Products.Remove(Product);
+            return HandleResult(await Mediator.Send(new Create.Command{product = productFormVm}));
+        }
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
 
-            await _myDbContext.SaveChangesAsync();
-
-            return NoContent();
+            return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

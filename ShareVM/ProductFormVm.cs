@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ShareVM
 {
     public class ProductFormVm
@@ -8,6 +10,10 @@ namespace ShareVM
 
         public string Description { get; set; }
 
+        public string Image { get; set; }
+
         public int BrandId { get; set; }
+
+        public List<string> CategoryName { get; set; }
     }
 }
