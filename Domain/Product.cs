@@ -29,8 +29,6 @@ namespace Domain
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
 
-
-
         public ICollection<Rate> rate { get; set; } = new List<Rate>();
 
         public ICollection<CategoryProduct> ProductCategories { get; set; } = new List<CategoryProduct>();

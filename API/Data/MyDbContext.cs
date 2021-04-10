@@ -16,6 +16,8 @@ namespace API.Data
 
         public DbSet<CategoryProduct> ProductCategories { get; set; }
 
+        public DbSet<CartItem> CartItems { get; set; }
+
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
@@ -46,6 +48,14 @@ namespace API.Data
 
                 b.HasOne(r => r.user)
                     .WithMany(u => u.rating)
+                    .HasForeignKey(o => o.userId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<CartItem>(b => {
+                b.HasKey(k => k.userId);
+                b.HasOne(c => c.User)
+                    .WithMany(u => u.Cart)
                     .HasForeignKey(o => o.userId)
                     .OnDelete(DeleteBehavior.Cascade);
             });

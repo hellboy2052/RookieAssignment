@@ -2,20 +2,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using API.Services.Security;
-using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
+using Domain;
 
-namespace API.Services.Rates
+namespace API.Services.Profiles
 {
-    public class RatingToggle
+    public class Carting
     {
-
         public class Command : IRequest<ResultVm<Unit>>
         {
-            public int productID { get; set; }
-            public double rate { get; set; }
+            public int productId { get; set; }
+
+            public int quantity { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, ResultVm<Unit>>
@@ -30,40 +30,44 @@ namespace API.Services.Rates
 
             public async Task<ResultVm<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (request.rate > 5) return ResultVm<Unit>.Failure("Rate point is over 5");
+                var product = await _context.Products.FindAsync(request.productId);
 
-                var product = await _context.Products.FindAsync(request.productID);
+                if (product == null) return null;
 
                 var user = await _context.Users
                     .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                if (product == null) return null;
+                var cartItem = await _context.CartItems
+                    .FirstOrDefaultAsync(x => x.productId == request.productId && x.userId == user.Id);
 
-                var rating = await _context.Rates
-                    .FirstOrDefaultAsync(x => x.productId == request.productID && x.userId == user.Id);
-                //Toggle if rating exist or not
-                if (rating == null)
+                var increase = request.quantity;
+
+                if(request.quantity == 0) increase = 1;
+
+                if (cartItem == null)
                 {
-                    rating = new Rate
+                    
+
+                    cartItem = new CartItem
                     {
-                        product = product,
-                        user = user,
-                        rate = request.rate,
+                        Product = product,
+                        User = user,
+                        quantity = increase,
                     };
-                    _context.Rates.Add(rating);
+                    _context.Add(cartItem);
                 }
                 else
                 {
-                    rating.rate = request.rate;
+                    cartItem.quantity = cartItem.quantity + increase;
+
                 }
 
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (result) return ResultVm<Unit>.Success(Unit.Value);
 
-                return ResultVm<Unit>.Failure("Something wrong with your rating");
+                return ResultVm<Unit>.Failure("Something wrong with your Cart");
             }
         }
-
     }
 }
