@@ -16,6 +16,16 @@ namespace ShareVM
 
         public string BrandName { get; set; }
 
+        public int ratingCount { get; set; }
+
+        public double rating { get; set; }
+
+        public string currentRate { get; set; }
+
+        public bool IsRate { get; set; }
+
+        public ICollection<RateVm> rate { get; set; } = new List<RateVm>();
+
         public ICollection<CategoryVm> ProductCategories { get; set; }
     }
 }

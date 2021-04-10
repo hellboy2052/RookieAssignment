@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.models;
+using Domain;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
