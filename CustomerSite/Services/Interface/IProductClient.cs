@@ -9,5 +9,7 @@ namespace CustomerSite.Services
         Task<IList<ProductVm>> GetProducts();
 
         Task<ProductVm> GetProduct(int id);
+
+        Task<ResultVm<string>> SetRating(int productID, double rate);
     }
 }
