@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using API.Services;
 using API.Services.Products;
-using API.Services.Security;
 
 namespace API.Services.Configuration
 {
@@ -25,7 +24,6 @@ namespace API.Services.Configuration
             });
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
-            services.AddScoped<IUserAccessor, UserAccessor>();
             return services;
 
         }

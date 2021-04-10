@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
 using CustomerSite.Services.Interface;
-using Microsoft.AspNetCore.Http;
 
 namespace CustomerSite.Controllers
 {
@@ -27,12 +26,10 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index(string brand, string category)
         {
-            //check if user currently login or not
             var user = await _accountClient.getCurrentUser();
-            if(user != null){
-                ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
-            }
-            
+            //check if user currently login or not
+            ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+
             var products = await _productClient.GetProducts();
 
             if (!string.IsNullOrEmpty(brand)) products = products.Where(x => x.BrandName == brand).Select(x => x).ToList();
@@ -52,17 +49,6 @@ namespace CustomerSite.Controllers
             var product = await _productClient.GetProduct(id);
             
             return View(product);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> rating(int Id, IFormCollection frm){
-            var user = await _accountClient.getCurrentUser();
-            if(user.Error != null){
-               return RedirectToAction(actionName: "login", controllerName: "Account");
-            }
-
-            double rate = double.Parse(frm["rating"]);
-            return Content("hello there - " + rate + " ,pId: " + Id);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

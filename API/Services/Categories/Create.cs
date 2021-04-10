@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
-using Domain;
+using API.models;
 using MediatR;
 using ShareVM;
 

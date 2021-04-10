@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
-using Domain;
+using API.models;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

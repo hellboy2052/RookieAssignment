@@ -1,4 +1,4 @@
-namespace Domain
+namespace API.models
 {
     public class CategoryProduct
     {

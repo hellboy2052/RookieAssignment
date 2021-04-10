@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using API.core;
 using API.Data;
-using Domain;
+using API.models;
 using API.Services;
 using API.Services.Configuration;
 using API.Services.Products;

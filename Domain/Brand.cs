@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace API.models
 {
     public class Brand
     {

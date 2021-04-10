@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
-using Domain;
+using API.models;
 using API.Services.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +15,12 @@ namespace API.Controllers
     
     public class ProductsController : BaseController
     {
+        private readonly MyDbContext _myDbContext;
+
+        public ProductsController(MyDbContext myDbContext)
+        {
+            _myDbContext = myDbContext;
+        }
 
         [AllowAnonymous]
         [HttpGet]
