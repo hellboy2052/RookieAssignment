@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using CustomerSite.Models;
 using CustomerSite.Services;
 using CustomerSite.Services.Interface;
+using Microsoft.AspNetCore.Http;
 
 namespace CustomerSite.Controllers
 {
@@ -50,6 +51,22 @@ namespace CustomerSite.Controllers
             
             return View(product);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> rating(int Id, IFormCollection frm){
+            var user = await _accountClient.getCurrentUser();
+            if(user.Error != null){
+               return RedirectToAction(actionName: "login", controllerName: "Account");
+            }
+
+            // Get value from checked radio
+            double rate = double.Parse(frm["rating"]);
+            await _productClient.SetRating(Id, rate);
+            string referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
+        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
