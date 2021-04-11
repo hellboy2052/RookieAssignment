@@ -68,3 +68,20 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+#cartlogo .p1[data-count]:after{
+  position:absolute;
+  right:-40%;
+  top:-25%;
+  content: attr(data-count);
+  font-size:50%;
+  padding:.6em;
+  border-radius:50%;
+  line-height:0.5em;
+  color: white;
+  background:rgba(255,0,0,.85);
+  text-align:center;
+  min-width: 1em;
+  /* //font-weight:bold; */
+}
+

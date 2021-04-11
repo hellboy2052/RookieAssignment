@@ -64,5 +64,17 @@ namespace CustomerSite.Services
             return ResultVm<UserVm>.Failure(response.Content.ReadAsStringAsync().Result.ToString());
         }
 
+        public async Task<ResultVm<ProfileVm>> getProfile()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            client.SetBearerToken(token);
+            
+            var response = await client.GetAsync(_config["API:Default"] + "/Profile");
+            if(response.IsSuccessStatusCode){
+                return ResultVm<ProfileVm>.Success(await response.Content.ReadAsAsync<ProfileVm>());
+            }
+            return ResultVm<ProfileVm>.Failure(response.Content.ReadAsStringAsync().Result.ToString());
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace API.Data
             });
 
             builder.Entity<CartItem>(b => {
-                b.HasKey(k => k.userId);
+                b.HasKey(k => new {k.userId, k.productId});
                 b.HasOne(c => c.User)
                     .WithMany(u => u.Cart)
                     .HasForeignKey(o => o.userId)

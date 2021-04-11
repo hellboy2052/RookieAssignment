@@ -20,13 +20,26 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var user = await _accountClient.getCurrentUser();
+            var user = await _accountClient.getProfile();
             if (user.Error == null)
             {
-                return View(user);
+                ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+                ViewData["cart"] = user.Error == null ? user.Value.Cart.Count : null;
+                return View(user.Value);
             }
             return Redirect("~/account/login");
 
+        }
+
+        public async Task<IActionResult> cart(){
+            var user = await _accountClient.getProfile();
+            if (user.Error == null)
+            {
+                ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+                ViewData["cart"] = user.Error == null ? user.Value.Cart.Count : null;
+                return View(user.Value);
+            }
+            return Redirect("~/account/login");
         }
 
         [HttpGet]

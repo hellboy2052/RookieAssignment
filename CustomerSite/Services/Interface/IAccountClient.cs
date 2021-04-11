@@ -10,5 +10,7 @@ namespace CustomerSite.Services.Interface
         Task<ResultVm<UserVm>> postRegister(RegisterVm register);
 
         Task<ResultVm<UserVm>> getCurrentUser();
+
+        Task<ResultVm<ProfileVm>> getProfile();
     }
 }

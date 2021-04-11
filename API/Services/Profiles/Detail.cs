@@ -14,7 +14,6 @@ namespace API.Services.Profiles
     {
         public class Query : IRequest<ResultVm<ProfileVm>>
         {
-            public string Username { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, ResultVm<ProfileVm>>
@@ -33,7 +32,7 @@ namespace API.Services.Profiles
             {
                 var user = await _context.Users
                     .ProjectTo<ProfileVm>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
-                    .SingleOrDefaultAsync(x => x.Username == request.Username);
+                    .SingleOrDefaultAsync(x => x.Username == _userAccessor.GetUsername());
                 if (user == null) return null;
 
                 return ResultVm<ProfileVm>.Success(user);

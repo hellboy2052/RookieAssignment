@@ -24,7 +24,10 @@
                                         <p class="btn btn-danger btn-block">@product.Price</p>
                                     </div>
                                     <div class="col">
-                                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                                        <form method="POST">
+                                            <button asp-controller="Home" asp-action="AddToCart" asp-route-id="@product.Id" type="submit" class="btn btn-success btn-block"><i
+                                            class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

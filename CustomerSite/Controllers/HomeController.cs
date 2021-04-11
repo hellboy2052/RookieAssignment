@@ -27,9 +27,10 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index(string brand, string category)
         {
-            var user = await _accountClient.getCurrentUser();
+            var user = await _accountClient.getProfile();
             //check if user currently login or not
             ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
+            ViewData["cart"] = user.Error == null ? user.Value.Cart.Count : null;
 
             var products = await _productClient.GetProducts();
 
@@ -43,26 +44,60 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> product(int id)
         {
-            var user = await _accountClient.getCurrentUser();
+            var user = await _accountClient.getProfile();
             //check if user currently login or not
             ViewData["username"] = user.Error == null ? user.Value.Username : string.Empty;
-
+            ViewData["cart"] = user.Error == null ? user.Value.Cart.Count : null;
             var product = await _productClient.GetProduct(id);
             
             return View(product);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int id, int quantity = 0){
+            var user = await _accountClient.getProfile();
+            if(user.Error != null) {
+                return RedirectToAction(actionName: "login", controllerName: "Account");
+            }
+            
+            
+            var result = await _productClient.AddToCart(id, quantity);
+            if(result.Error != null){
+                return Redirect("~/");
+            }
+            string referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> DeleteFromCart(int id){
+            var user = await _accountClient.getProfile();
+            if(user.Error != null) {
+                return RedirectToAction(actionName: "login", controllerName: "Account");
+            }
+            var result = await _productClient.DeletFromCart(id);
+            if(result.Error != null){
+                return Redirect("~/");
+            }
+
+            string referer = Request.Headers["Referer"].ToString();
+            return Redirect(referer);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> rating(int Id, IFormCollection frm){
-            var user = await _accountClient.getCurrentUser();
+            var user = await _accountClient.getProfile();
             if(user.Error != null){
                return RedirectToAction(actionName: "login", controllerName: "Account");
             }
 
             // Get value from checked radio
             double rate = double.Parse(frm["rating"]);
-            await _productClient.SetRating(Id, rate);
+            var result =await _productClient.SetRating(Id, rate);
+            if(result.Error != null){
+                return Redirect("~/");
+            }
             string referer = Request.Headers["Referer"].ToString();
             return Redirect(referer);
         }

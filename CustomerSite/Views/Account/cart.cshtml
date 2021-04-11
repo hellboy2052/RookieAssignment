@@ -1,0 +1,117 @@
+@model ShareVM.ProfileVm
+
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["css"] = "/css/cart.css";
+}
+
+<div class="container">
+  <div class="card shopping-cart">
+    <div class="card-header bg-dark text-light">
+      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      YOUR CART
+      <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+      @if (@Model.Cart.Count != 0)
+      {
+      
+      
+          
+      
+      @foreach (var item in @Model.Cart.ToList())
+      {
+      <!-- PRODUCT -->
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-2 text-center">
+          <img
+            class="img-responsive"
+            src="~/img/main-image/@item.Product.Image"
+            alt="prewiew"
+            width="120"
+            height="80"
+          />
+        </div>
+        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+          <h4 class="product-name"><strong>Brand: </strong>@item.Product.BrandName</h4>
+          <h4 class="product-name"><strong>Name: </strong>@item.Product.Name</h4>
+          <h5 class="crop">
+            <small>@item.Product.Description</small>
+          </h5>
+        </div>
+        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+          <div
+            class="col-3 col-sm-3 col-md-6 text-md-center"
+            style="padding-top: 30px"
+          >
+            <h6>
+              <strong>@item.Product.Price<span class="text-muted">x</span></strong>
+            </h6>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4 position-relative">
+            <div class="quantity">
+              <input
+                type="number"
+                step="1"
+                max="99"
+                min="1"
+                value="@item.quantity"
+                title="Qty"
+                class="qty"
+                size="4"
+              />
+            </div>
+          </div>
+          <div class="col-2 col-sm-2 col-md-2 text-right position-relative">
+            <form method="POST">
+              <button asp-controller="Home" asp-action="DeleteFromCart" asp-route-id="@item.productId" type="submit" class="btn btn-outline-danger btn-xs position-absolute" style="
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              ">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      }
+      <hr />
+      <!-- END PRODUCT -->
+      }else{
+        <!-- PRODUCT -->
+        <div class="row justify-content-center">
+          <div class="card text-center">
+              <div class="card-body">
+                  <h5 class="card-title">No Item left</h5>
+                  <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Go back shopping </a>
+              </div>
+          </div>
+        </div>
+        <!-- END PRODUCT -->
+      }
+    </div>
+    
+    <div class="card-footer d-flex" style="
+    justify-content: space-between;
+    align-items: center;
+">
+      <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
+        <div class="row">
+          <div class="col-6">
+            <input type="text" class="form-control" placeholder="Coupon code" />
+          </div>
+          <div class="col-6">
+            <input type="submit" class="btn btn-default" value="Use Coupon" />
+          </div>
+        </div>
+      </div>
+      <div class="pull-right" style="margin: 10px">
+        <a href="" class="btn btn-success pull-right ml-3">Checkout</a>
+        <div class="pull-right m-2">
+          Total price: <b>50.00€</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

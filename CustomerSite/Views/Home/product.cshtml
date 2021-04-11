@@ -6,7 +6,6 @@
     ViewData["js"] = "js/productdetail.js";
 }
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
 @* <div class="wrapper">
     
     <main>
@@ -135,7 +134,7 @@
          <p class="pt-1">@Model.Description
          </p>
          <hr>
-         <form action="">
+         <form method="POST">
             <div class="table-responsive mb-2">
                 <table class="table table-sm table-borderless">
                 <tbody>
@@ -145,10 +144,10 @@
                     <tr>
                         <td class="pl-0">
                             <div class="def-number-input number-input safari_only mb-0">
-                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                                 class="minus">-</button>
-                            <input class="quantity" min="0" name="quantity" value="1" type="number">
-                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                            <input id="qty" class="quantity" min="0" name="quantity" value="1" type="number">
+                            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                                 class="plus">+</button>
                             </div>
                         </td>
@@ -156,10 +155,19 @@
                 </tbody>
                 </table>
             </div>
-            <button type="button" class="btn btn-primary btn-md mr-1 mb-2"><i
+             
+            <button onclick="itemadding()" asp-controller="Home" asp-action="AddToCart" asp-route-id="@Model.Id" type="submit" class="btn btn-primary btn-md mr-1 mb-2"><i
                 class="fas fa-shopping-cart pr-2"></i>Add to cart</button>
          </form>
       </div>
    </div>
 </section>
 <!--Section: Block Content-->
+
+@* <script>
+    const itemadding = () => {
+        var badge = $("#cartBadge").attr("data-count");
+        var quantity = $("#qty").val();
+        $("#cartBadge").attr("data-count", parseInt(quantity) + parseInt(badge));
+    }
+</script> *@

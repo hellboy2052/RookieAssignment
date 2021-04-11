@@ -54,5 +54,33 @@ namespace CustomerSite.Services
             }
             return ResultVm<string>.Failure("failed to rate a product");
         }
+
+        public async Task<ResultVm<string>> AddToCart(int productID, int quantity = 0)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            client.SetBearerToken(token);
+
+            var response = await client.PostAsync(_config["API:Default"] + $"/Profile/AddToCart/{productID}?quantity={quantity}", null);
+
+            if(response.IsSuccessStatusCode){
+                return ResultVm<string>.Success("complete");
+            }
+            return ResultVm<string>.Failure("failed to add product to cart");
+        }
+
+        public async Task<ResultVm<string>> DeletFromCart(int productID)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = _httpContextAccessor.HttpContext.Request.Cookies["jwt"];
+            client.SetBearerToken(token);
+
+            var response = await client.DeleteAsync(_config["API:Default"] + $"/Profile/DeleteFromCart/{productID}");
+
+            if(response.IsSuccessStatusCode){
+                return ResultVm<string>.Success("complete");
+            }
+            return ResultVm<string>.Failure("failed to add product to cart");
+        }
     }
 }
