@@ -14,8 +14,8 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrderDetail(int id, int productId){
-            return HandleResult(await Mediator.Send(new Detail.Query{orderId = id, productId = productId}));
+        public async Task<IActionResult> GetOrderDetail(int id){
+            return HandleResult(await Mediator.Send(new Detail.Query{orderId = id}));
         }
 
         [HttpPost("checkout")]

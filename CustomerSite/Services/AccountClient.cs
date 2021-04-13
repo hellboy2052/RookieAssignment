@@ -40,6 +40,7 @@ namespace CustomerSite.Services
 
         public async Task<ResultVm<UserVm>> postRegister(RegisterVm register)
         {
+            //Send Json body
             var content = new StringContent(JsonConvert.SerializeObject(register)
                 , Encoding.UTF8, "application/json");
             

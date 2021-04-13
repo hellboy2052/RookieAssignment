@@ -5,6 +5,10 @@ namespace ShareVM
         public int orderId { get; set; }
 
         public int productId { get; set; }
+
+        public string Image { get; set; }
+
+        public string BrandName { get; set; }
         public string Name { get; set; }
         public decimal price { get; set; }
 

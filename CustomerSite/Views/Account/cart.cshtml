@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Home Page";
     ViewData["css"] = "/css/cart.css";
+    Decimal total = 0;
 }
 
 <div class="container">
@@ -21,6 +22,10 @@
       
       @foreach (var item in @Model.Cart.ToList())
       {
+      {
+        total = total + (item.Product.Price * item.quantity);
+
+      }
       <!-- PRODUCT -->
       <div class="row">
         <div class="col-12 col-sm-12 col-md-2 text-center">
@@ -94,9 +99,8 @@
     
     <div class="card-footer d-flex" style="
     justify-content: space-between;
-    align-items: center;
-">
-      <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
+    align-items: center;">
+      @* <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
         <div class="row">
           <div class="col-6">
             <input type="text" class="form-control" placeholder="Coupon code" />
@@ -105,11 +109,11 @@
             <input type="submit" class="btn btn-default" value="Use Coupon" />
           </div>
         </div>
-      </div>
+      </div> *@
       <div class="pull-right" style="margin: 10px">
-        <a href="" class="btn btn-success pull-right ml-3">Checkout</a>
+        <a asp-action="CheckOut" asp-controller="Account" class="btn btn-success pull-right ml-3">Checkout</a>
         <div class="pull-right m-2">
-          Total price: <b>50.00€</b>
+          Total price: <b>@total VND</b>
         </div>
       </div>
     </div>

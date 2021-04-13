@@ -36,6 +36,7 @@ namespace CustomerSite
             services.AddTransient<ICategoryClient, CategoryClient>();
             services.AddTransient<IBrandClient, BrandClient>();
             services.AddTransient<IAccountClient, AccountClient>();
+            services.AddTransient<IOrderClient, OrderClient>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews();
         }

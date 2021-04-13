@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
@@ -11,14 +13,12 @@ namespace API.Services.Orders
 {
     public class Detail
     {
-        public class Query : IRequest<ResultVm<OrderDetailVm>>
+        public class Query : IRequest<ResultVm<List<OrderDetailVm>>>
         {
             public int orderId { get; set; }
-
-            public int productId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, ResultVm<OrderDetailVm>>
+        public class Handler : IRequestHandler<Query, ResultVm<List<OrderDetailVm>>>
         {
             private readonly MyDbContext _context;
             private readonly IMapper _mapper;
@@ -28,13 +28,14 @@ namespace API.Services.Orders
                 this._context = context;
             }
 
-            public async Task<ResultVm<OrderDetailVm>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<ResultVm<List<OrderDetailVm>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var orderDetail = await _context.OrderDetails
+                    .Where(x => x.orderId == request.orderId)
                     .ProjectTo<OrderDetailVm>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(x => x.orderId == request.orderId && x.productId == request.productId);
+                    .ToListAsync();
                 
-                return ResultVm<OrderDetailVm>.Success(orderDetail);
+                return ResultVm<List<OrderDetailVm>>.Success(orderDetail);
             }
         }
     }
