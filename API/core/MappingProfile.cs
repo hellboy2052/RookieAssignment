@@ -34,8 +34,16 @@ namespace API.core
                     o => o.MapFrom(s => s.rate.FirstOrDefault(x => x.user.UserName == currentUsername).rate));
             // Profile
             CreateMap<User, ProfileVm>();
+            // Order
+            CreateMap<Order, OrderVm>()
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.User.UserName))
+                .ForMember(d => d.Fullname, o => o.MapFrom(s => s.User.FullName));
+            CreateMap<OrderDetail, OrderDetailVm>()
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Product.Name));
 
-            
+
+
+
         }
     }
 }

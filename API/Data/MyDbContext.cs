@@ -21,6 +21,10 @@ namespace API.Data
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -52,11 +56,20 @@ namespace API.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            builder.Entity<CartItem>(b => {
-                b.HasKey(k => new {k.userId, k.productId});
+            builder.Entity<CartItem>(b =>
+            {
+                b.HasKey(k => new { k.userId, k.productId });
                 b.HasOne(c => c.User)
                     .WithMany(u => u.Cart)
                     .HasForeignKey(o => o.userId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<OrderDetail>(b => {
+                b.HasKey(k => new {k.orderId, k.productId});
+                b.HasOne(o => o.Order)
+                    .WithMany(s => s.orders)
+                    .HasForeignKey(k => k.orderId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
