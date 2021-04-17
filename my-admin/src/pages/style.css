@@ -1,0 +1,12 @@
+body {
+  background-color: #eaeaea !important;
+}
+
+.ui.thin.left.sidebar{
+  width: 200px;
+}
+
+.menuSub{
+  font-size: 12px;
+  padding: 5px;
+}

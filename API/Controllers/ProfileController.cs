@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using API.Services.Profiles;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,9 @@ namespace API.Controllers
     [Authorize]
     public class ProfileController : BaseController
     {
+        public ProfileController(IMediator mediator) : base(mediator)
+        {
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetProfile()

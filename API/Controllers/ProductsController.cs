@@ -9,22 +9,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
+using MediatR;
 
 namespace API.Controllers
 {
     
     public class ProductsController : BaseController
     {
-        private readonly MyDbContext _myDbContext;
-
-        public ProductsController(MyDbContext myDbContext)
+        public ProductsController(IMediator mediator) : base(mediator)
         {
-            _myDbContext = myDbContext;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetProducts(string category)
+        public async Task<IActionResult> GetProducts()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }

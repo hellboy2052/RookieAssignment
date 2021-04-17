@@ -1,0 +1,46 @@
+[
+    {
+        "name": "Dashboard",
+        "path": "/dashboard"
+    },
+    {
+        "name": "Products",
+        "path": "/products",
+        "sub" : [
+            {
+                "name": "Product list",
+                "path": "/products/list"
+            },
+            {
+                "name": "Brand list",
+                "path": "/products/Brands"
+            },
+            {
+                "name": "Category list",
+                "path": "/products/Categories"
+            },
+            {
+                "name": "Add Product",
+                "path": "/products/add-product"
+            }
+        ]
+    },
+    {
+        "name": "smt",
+        "path": "/smt"
+    },
+    {
+        "name": "Users",
+        "path": "/users",
+        "sub" : [
+            {
+                "name": "User list",
+                "path": "/users/list"
+            },
+            {
+                "name": "Add User",
+                "path": "/users/add-user"
+            }
+        ]
+    }
+]

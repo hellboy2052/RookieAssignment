@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Services.Orders;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ShareVM;
 
@@ -8,6 +9,10 @@ namespace API.Controllers
 {
     public class OrderController : BaseController
     {
+        public OrderController(IMediator mediator) : base(mediator)
+        {
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetOrders(){
             return HandleResult(await Mediator.Send(new List.Query()));

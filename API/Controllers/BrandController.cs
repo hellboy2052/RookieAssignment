@@ -8,16 +8,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
+using MediatR;
 
 namespace API.Controllers
 {
     public class BrandController : BaseController
     {
-        private readonly MyDbContext _context;
 
-        public BrandController(MyDbContext context)
+        public BrandController(IMediator mediator) :base(mediator)
         {
-            _context = context;
         }
 
         [AllowAnonymous]

@@ -8,16 +8,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
+using MediatR;
 
 namespace API.Controllers
 {
     public class CategoriesController : BaseController
     {
-        private readonly MyDbContext _myDbContext;
 
-        public CategoriesController(MyDbContext myDbContext)
+        public CategoriesController(IMediator mediator) : base(mediator)
         {
-            _myDbContext = myDbContext;
         }
 
         [AllowAnonymous]

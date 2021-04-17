@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ShareVM
 {
     public class UserVm
@@ -7,5 +9,7 @@ namespace ShareVM
         public string FullName { get; set; }
 
         public string Token { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }

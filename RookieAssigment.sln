@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareVM", "ShareVM\ShareVM.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerSite", "CustomerSite\CustomerSite.csproj", "{6529E296-B0B8-4741-B8F8-380B67D935FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.test", "API.test\API.test.csproj", "{E16252C1-3C43-456E-BE58-11B9E524553C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{6529E296-B0B8-4741-B8F8-380B67D935FD}.Release|x64.Build.0 = Release|Any CPU
 		{6529E296-B0B8-4741-B8F8-380B67D935FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{6529E296-B0B8-4741-B8F8-380B67D935FD}.Release|x86.Build.0 = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|x64.Build.0 = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Debug|x86.Build.0 = Debug|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|x64.ActiveCfg = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|x64.Build.0 = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E16252C1-3C43-456E-BE58-11B9E524553C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

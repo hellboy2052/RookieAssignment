@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -36,7 +37,12 @@ namespace API.Controllers
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginVm.Password, false);
 
-            if (result.Succeeded) return createUserObject(user);
+            if (result.Succeeded)
+            {
+                var role = await _userManager.GetRolesAsync(user);
+                if(role.Count < 0) return BadRequest("Problem with getting user Role");
+                return createUserObject(user, role);
+            }
 
             return BadRequest("Incorrect password");
         }
@@ -44,16 +50,19 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserVm>> Register(RegisterVm registerVm)
         {
-            if(await _userManager.Users.AnyAsync(x => x.Email == registerVm.Email)){
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerVm.Email))
+            {
                 ModelState.AddModelError("email", "Email taken");
                 return ValidationProblem();
             }
-            if(await _userManager.Users.AnyAsync(x => x.UserName == registerVm.Username)){
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerVm.Username))
+            {
                 ModelState.AddModelError("username", "Username taken");
                 return ValidationProblem();
             }
 
-            var user = new User{
+            var user = new User
+            {
                 Email = registerVm.Email,
                 FullName = registerVm.Fullname,
                 UserName = registerVm.Username
@@ -61,10 +70,19 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerVm.Password);
 
-            if(result.Succeeded) return createUserObject(user);
+            if (result.Succeeded)
+            {
+                var result2 = await _userManager.AddToRoleAsync(user, "member");
+            }
+            else
+            {
+                return BadRequest("Problem registering user");
+            }
+
+            var role = await _userManager.GetRolesAsync(user);
+            if (role.Count > 0) return createUserObject(user, role);
 
             return BadRequest("Problem registering user");
-
         }
 
         [Authorize]
@@ -72,18 +90,21 @@ namespace API.Controllers
         public async Task<ActionResult<UserVm>> GetCurrentUser()
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
-            if(user == null) return NotFound();
-            return createUserObject(user);
+            if (user == null) return NotFound();
+            var role = await _userManager.GetRolesAsync(user);
+            return createUserObject(user, role);
         }
 
 
-        private UserVm createUserObject(User user)
+        private UserVm createUserObject(User user, IList<string> roles)
         {
+
             return new UserVm
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
-                FullName = user.FullName
+                FullName = user.FullName,
+                Roles = roles
             };
         }
     }
