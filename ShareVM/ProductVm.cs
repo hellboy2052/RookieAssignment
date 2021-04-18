@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ShareVM
@@ -13,6 +14,10 @@ namespace ShareVM
         public string Description { get; set; }
 
         public string Image { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
 
         public string BrandName { get; set; }
 

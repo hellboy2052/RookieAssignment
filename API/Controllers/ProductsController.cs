@@ -13,7 +13,7 @@ using MediatR;
 
 namespace API.Controllers
 {
-    
+
     public class ProductsController : BaseController
     {
         public ProductsController(IMediator mediator) : base(mediator)
@@ -31,25 +31,36 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
-            return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new Detail.Query { Id = id }));
         }
 
+        // Create Product
         [Authorize(Policy = "IsPermitRequire")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
         {
 
-
-            return HandleResult(await Mediator.Send(new Create.Command{product = productFormVm}));
+            return HandleResult(await Mediator.Send(new Create.Command { product = productFormVm }));
         }
+
+        // Edit Product
+        [Authorize(Policy = "IsPermitRequire")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditProduct(int id, ProductFormVm productFormVm)
+        {
+            productFormVm.Id = id;
+            return HandleResult(await Mediator.Send(new Edit.Command { Product = productFormVm }));
+        }
+
+        // Delete Product
         [Authorize(Policy = "IsPermitRequire")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
 
-            return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
-        
+
     }
 }

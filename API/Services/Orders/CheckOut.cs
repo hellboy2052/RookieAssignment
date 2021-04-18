@@ -32,10 +32,6 @@ namespace API.Services.Orders
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-
-
-
-
                 // Add order
                 Order order = new Order
                 {

@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using Domain;
+using FluentValidation;
 using MediatR;
 using ShareVM;
 
@@ -13,6 +14,15 @@ namespace API.Services.Categories
         {
             public CategoryFormVm categoryFormVm { get; set; }
         }
+
+        public class ComandValidator : AbstractValidator<Command>
+        {
+            public ComandValidator(MyDbContext context)
+            {
+                RuleFor(x => x.categoryFormVm).SetValidator(new CategoryValidator(context));
+            }
+        }
+
 
         public class Handler : IRequestHandler<Command, ResultVm<Unit>>
         {
@@ -33,7 +43,7 @@ namespace API.Services.Categories
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return ResultVm<Unit>.Failure("Failed to create category");
+                if (!result) return ResultVm<Unit>.Failure("Failed to create category");
 
                 return ResultVm<Unit>.Success(Unit.Value);
 

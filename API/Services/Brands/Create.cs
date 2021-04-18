@@ -2,6 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Data;
 using Domain;
+using FluentValidation;
 using MediatR;
 using ShareVM;
 
@@ -12,6 +13,14 @@ namespace API.Services.Brands
         public class Command : IRequest<ResultVm<Unit>>
         {
             public BrandFormVm brandFormVm { get; set; }
+        }
+
+        public class ComandValidator : AbstractValidator<Command>
+        {
+            public ComandValidator(MyDbContext context)
+            {
+                RuleFor(x => x.brandFormVm).SetValidator(new BrandValidator(context));
+            }
         }
 
         public class Handler : IRequestHandler<Command, ResultVm<Unit>>
