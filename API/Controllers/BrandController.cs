@@ -33,7 +33,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpPost]
         public async Task<IActionResult> CreateBrand(BrandFormVm brandFormVm)
         {
@@ -41,7 +41,7 @@ namespace API.Controllers
 
         }
         
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrand(int id)
         {

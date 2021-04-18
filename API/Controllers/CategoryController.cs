@@ -33,14 +33,14 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CategoryFormVm CategoryFormVm){
 
             return HandleResult(await Mediator.Send(new Create.Command{categoryFormVm = CategoryFormVm}));
         }
 
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {

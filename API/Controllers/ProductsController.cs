@@ -34,7 +34,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Detail.Query{Id = id}));
         }
 
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
         {
@@ -42,7 +42,7 @@ namespace API.Controllers
 
             return HandleResult(await Mediator.Send(new Create.Command{product = productFormVm}));
         }
-        [Authorize]
+        [Authorize(Policy = "IsPermitRequire")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {

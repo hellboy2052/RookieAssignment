@@ -1,7 +1,9 @@
 using System.Text;
 using API.Data;
+using API.Services.Security;
 using Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +37,17 @@ namespace API.Services.Configuration
                         ValidateAudience = false,
                     };
                 });
+            services.AddAuthorization(option =>
+            {
+
+                //Register IsPermitRequirement policy to service
+
+                option.AddPolicy("IsPermitRequire", policy =>
+                {
+                    policy.Requirements.Add(new IsPermitRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler, IsPermitRequirementHandler>();
             services.AddScoped<TokenService>();
             return services;
         }
