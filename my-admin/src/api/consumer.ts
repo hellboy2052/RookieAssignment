@@ -1,11 +1,18 @@
 import axios, { AxiosResponse } from 'axios';
+import { User } from './models/user';
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
     })
 }
 
-axios.defaults.baseURL = "http://localhost:5000/";
+axios.defaults.baseURL = "https://localhost:5002/";
+
+// axios.interceptors.request.use(config =>)
+axios.interceptors.response.use(async res => {
+    await sleep(1000);
+    return res;
+});
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -21,11 +28,12 @@ const Products = {
 }
 
 const Account = {
-    
+    current: () => request.get<User>("api/Account"),
 }
 
 const consumer = {
-    Products
+    Products,
+    Account
 }
 
 export default consumer;

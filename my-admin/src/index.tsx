@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './pages/style.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./pages/style.css";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserHistory } from "history";
 import { Router } from "react-router-dom";
-
+import { store, StoreContext } from "./api/store/store";
 
 export const history = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
+  <StoreContext.Provider value={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </StoreContext.Provider>,
   document.getElementById("root")
 );
 

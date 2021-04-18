@@ -20,6 +20,7 @@ function App() {
                 </Grid.Column>
                 <Grid.Column width={13}>
                   <Route path="/products/list" component={ProductList} />
+                  <Route path="/dashboard" component={ProductList} />
                   <footer className="sticky-footer bg-white">
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">
