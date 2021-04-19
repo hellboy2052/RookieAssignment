@@ -1,7 +1,8 @@
+import { observer } from "mobx-react-lite";
 import React from "react";
 import { Icon, Menu, Table } from "semantic-ui-react";
 
-export default function ProductTable() {
+export default observer(function ProductTable() {
   return (
     <Table celled>
       <Table.Header>
@@ -50,4 +51,4 @@ export default function ProductTable() {
       </Table.Footer> */}
     </Table>
   );
-}
+});

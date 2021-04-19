@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { User } from './models/user';
+import { User, UserFormValues } from './models/user';
+import { store } from './store/store';
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
@@ -8,9 +9,16 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = "https://localhost:5002/";
 
-// axios.interceptors.request.use(config =>)
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})
+
 axios.interceptors.response.use(async res => {
     await sleep(1000);
+    console.log(res);
+
     return res;
 });
 
@@ -29,6 +37,7 @@ const Products = {
 
 const Account = {
     current: () => request.get<User>("api/Account"),
+    login: (user: UserFormValues) => request.post<User>("api/Account/login", user),
 }
 
 const consumer = {

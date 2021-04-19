@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./pages/style.css";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
