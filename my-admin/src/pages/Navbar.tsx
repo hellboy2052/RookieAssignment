@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Header, Menu, Sidebar } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
 import SubMenu from "../components/SubMenu";
@@ -15,7 +15,7 @@ const navItem = [
     sub: [
       {
         name: "Product list",
-        path: "/products/list",
+        path: "/productslist",
       },
       {
         name: "Brand list",
@@ -51,8 +51,6 @@ const navItem = [
   },
 ];
 export default observer(function Navbar() {
-  const [menuItem, setmenuItem] = useState(navItem);
-
   const {
     userStore: { user, logout },
   } = useStore();
@@ -68,8 +66,8 @@ export default observer(function Navbar() {
         >
           Hello {user?.username}
         </Header>
-        {menuItem.map((item) => (
-          <SubMenu key={menuItem.indexOf(item)} item={item} />
+        {navItem.map((item) => (
+          <SubMenu key={navItem.indexOf(item)} item={item} />
         ))}
         <Menu.Item>
           <Button

@@ -23,14 +23,16 @@ export default class UserStore {
             const user = await consumer.Account.login(form);
             // Check user Roles
             user.roles.forEach(role => {
-                if (role != "customer") {
+                if (role !== "customer") {
                     store.commonStore.setToken(user.token);
                     runInAction(() => this.user = user)
                     history.push("/dashboard");
+                }else{
+                    toast.error("Customer are not allowed");
                 }
-                toast.error("Customer are not allowed");
+                
             });
-            history.push("/");
+            
 
 
         } catch (error) {

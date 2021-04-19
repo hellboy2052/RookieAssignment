@@ -1,34 +1,34 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { Icon, Menu, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
+import { useStore } from "../../api/store/store";
+import ProductTableItem from "./ProductTableItem";
 
 export default observer(function ProductTable() {
+  const { productStore } = useStore();
+  const { ProductsByDate } = productStore;
+
+  ProductsByDate.forEach((product) => {
+    console.log(product.name);
+  });
+
   return (
     <Table celled>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Header</Table.HeaderCell>
-          <Table.HeaderCell>Header</Table.HeaderCell>
-          <Table.HeaderCell>Header</Table.HeaderCell>
+          <Table.HeaderCell>Id</Table.HeaderCell>
+          <Table.HeaderCell>Name</Table.HeaderCell>
+          <Table.HeaderCell>Price</Table.HeaderCell>
+          <Table.HeaderCell>CreateDate</Table.HeaderCell>
+          <Table.HeaderCell>UpdateDate</Table.HeaderCell>
+          <Table.HeaderCell>Action</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-          <Table.Cell>Cell</Table.Cell>
-        </Table.Row>
+        {ProductsByDate.map((product) => {
+          return <ProductTableItem key={product.id} product={product} />;
+        })}
       </Table.Body>
 
       {/* <Table.Footer>

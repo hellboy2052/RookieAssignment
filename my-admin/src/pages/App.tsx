@@ -1,13 +1,15 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { Route } from "react-router";
+import { Redirect, Route } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { Container, Grid } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
 import LoadingComponent from "../components/LoadingComponent";
 import PrivateRoute from "../components/PrivateRoute";
+import DashBoard from "./dashboard/DashBoard";
 import mainPage from "./mainPage";
 import Navbar from "./Navbar";
+import ProductDetail from "./Product/ProductDetail";
 import ProductList from "./Product/ProductList";
 
 function App() {
@@ -37,8 +39,10 @@ function App() {
                   <Navbar />
                 </Grid.Column>
                 <Grid.Column width={13}>
-                  <PrivateRoute path="/products/list" component={ProductList} />
-                  <PrivateRoute path="/dashboard" component={ProductList} />
+                  <PrivateRoute path="/dashboard" component={DashBoard} />
+                  <PrivateRoute exact path="/products" component={() => <Redirect to="/productslist" />} />
+                  <PrivateRoute path="/productslist/" component={ProductList} />
+                  <PrivateRoute path="/products/:id" component={ProductDetail} />
                   <footer className="sticky-footer bg-white">
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">

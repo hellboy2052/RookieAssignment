@@ -8,6 +8,8 @@ export interface Product{
     description: string;
     image: string;
     brandName: string;
+    createdDate: Date | null;
+    updatedDate: Date | null;
     ratingCount: number;
     rating: number;
     currentRate: number;

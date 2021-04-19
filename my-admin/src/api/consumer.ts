@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { Product } from './models/product';
 import { User, UserFormValues } from './models/user';
 import { store } from './store/store';
 const sleep = (delay: number) => {
@@ -32,7 +33,8 @@ const request = {
 };
 
 const Products = {
-
+    list: () => request.get<Product[]>("Products"),
+    detail: (id: string) => request.get<Product>(`Products/${id}`),
 }
 
 const Account = {
