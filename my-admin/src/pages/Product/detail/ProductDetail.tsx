@@ -1,8 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { useStore } from "../../api/store/store";
-import LoadingComponent from "../../components/LoadingComponent";
+import { Grid, Segment, Image } from "semantic-ui-react";
+import { useStore } from "../../../api/store/store";
+import LoadingComponent from "../../../components/LoadingComponent";
+import ProductDetailHeader from "./ProductDetailHeader";
+import ProductDetailInfo from "./ProductDetailInfo";
 
 export default observer(function ProductDetail() {
   const { productStore } = useStore();
@@ -24,10 +27,11 @@ export default observer(function ProductDetail() {
 
   if (loadingInitial || !product)
     return <LoadingComponent content="Loading a Product..." />;
-  console.log(product);
+    
   return (
-    <>
-      <p>Hello product {id}</p>
-    </>
+    <Grid>
+      <ProductDetailHeader product={product} />
+      <ProductDetailInfo product={product} />
+    </Grid>
   );
 });

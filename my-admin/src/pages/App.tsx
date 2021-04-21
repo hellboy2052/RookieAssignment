@@ -9,7 +9,7 @@ import PrivateRoute from "../components/PrivateRoute";
 import DashBoard from "./dashboard/DashBoard";
 import mainPage from "./mainPage";
 import Navbar from "./Navbar";
-import ProductDetail from "./Product/ProductDetail";
+import ProductDetail from "./Product/detail/ProductDetail";
 import ProductList from "./Product/ProductList";
 
 function App() {
@@ -38,15 +38,15 @@ function App() {
                 <Grid.Column width={3}>
                   <Navbar />
                 </Grid.Column>
-                <Grid.Column width={13}>
+                <Grid.Column width={13} style={{marginTop: "50px"}}>
                   <PrivateRoute path="/dashboard" component={DashBoard} />
                   <PrivateRoute exact path="/products" component={() => <Redirect to="/productslist" />} />
                   <PrivateRoute path="/productslist/" component={ProductList} />
                   <PrivateRoute path="/products/:id" component={ProductDetail} />
-                  <footer className="sticky-footer bg-white">
+                  <footer className="sticky-footer bg-white" style={{marginTop: "20px", height: "5%"}}>
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2020</span>
+                        <span>Copyright © Your Website 2021</span>
                       </div>
                     </div>
                   </footer>

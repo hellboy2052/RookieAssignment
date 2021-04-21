@@ -45,10 +45,6 @@ const navItem = [
       },
     ],
   },
-  {
-    name: "Logout",
-    path: "/logout",
-  },
 ];
 export default observer(function Navbar() {
   const {
@@ -57,7 +53,7 @@ export default observer(function Navbar() {
 
   return (
     <>
-      <Sidebar className="fixed" inverted as={Menu} vertical visible={true}>
+      <Sidebar className="fixed" inverted as={Menu} vertical visible={true} style={{width: "16%"}}>
         <Header
           as="h2"
           textAlign="center"

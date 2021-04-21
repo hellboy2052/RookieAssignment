@@ -34,7 +34,9 @@ namespace API.test
                     {
                         Name = "Asus"
                     });
-                    await databaseContext.SaveChangesAsync();
+                    var result = await databaseContext.SaveChangesAsync() <= 0;
+
+                    if (result) throw new Exception("Database not changed");
                 }
             }
             return databaseContext;
@@ -63,5 +65,5 @@ namespace API.test
 
         }
     }
-        
+
 }
