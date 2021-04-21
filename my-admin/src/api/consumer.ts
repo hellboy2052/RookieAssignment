@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
+import { Brand } from './models/brand';
+import { Category } from './models/category';
 import { Product } from './models/product';
 import { User, UserFormValues } from './models/user';
 import { store } from './store/store';
@@ -42,9 +44,19 @@ const Account = {
     login: (user: UserFormValues) => request.post<User>("api/Account/login", user),
 }
 
+const Brands = {
+    list: () => request.get<Brand[]>("Brand"),
+}
+
+const Categories = {
+    list: () => request.get<Category[]>("Categories"),
+}
+
 const consumer = {
     Products,
-    Account
+    Account,
+    Brands,
+    Categories
 }
 
 export default consumer;

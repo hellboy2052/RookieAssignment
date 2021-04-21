@@ -16,6 +16,29 @@ export interface Product{
     isRate: boolean;
     rate: Rate[];
     productCategories: Category[];
+}
 
+export class ProductFormValues{
+    id?: number | undefined;
+    name: string = '';
+    price: number = 0;
+    description: string = ''; //Nullable
+    image: string  = ''; //Nullable
+    brandId: number | undefined;
+    categoryName: string[] = [];
 
+    constructor(product?: ProductFormValues){
+        // For edit product
+        if(product){
+            this.id = product.id;
+            this.name = product.name;
+            this.price = product.price;
+            this.description = product.description;
+            this.image = product.image;
+            this.brandId = product.brandId;
+            this.categoryName = product.categoryName;
+        }
+    }
+
+    
 }

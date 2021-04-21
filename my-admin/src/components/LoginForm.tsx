@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { Button, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
-import MyTextInput from "./MyTextInput";
+import MyTextInput from "./form/MyTextInput";
 
 export default observer(function LoginForm() {
   const { userStore } = useStore();

@@ -7,6 +7,7 @@ import { useStore } from "../api/store/store";
 import LoadingComponent from "../components/LoadingComponent";
 import PrivateRoute from "../components/PrivateRoute";
 import DashBoard from "./dashboard/DashBoard";
+import ProductForm from "./Form/ProductForm";
 import mainPage from "./mainPage";
 import Navbar from "./Navbar";
 import ProductDetail from "./Product/detail/ProductDetail";
@@ -43,6 +44,7 @@ function App() {
                   <PrivateRoute exact path="/products" component={() => <Redirect to="/productslist" />} />
                   <PrivateRoute path="/productslist/" component={ProductList} />
                   <PrivateRoute path="/products/:id" component={ProductDetail} />
+                  <PrivateRoute path="/product-form" component={ProductForm} />
                   <footer className="sticky-footer bg-white" style={{marginTop: "20px", height: "5%"}}>
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">
