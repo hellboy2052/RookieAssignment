@@ -18,8 +18,15 @@ export interface Product{
     productCategories: Category[];
 }
 
+
+export class Product implements Product {
+    constructor(init?: ProductFormValues){
+        Object.assign(this, init);
+    }
+}
+
 export class ProductFormValues{
-    id?: number | undefined;
+    id?: number = 0;
     name: string = '';
     price: number = 0;
     description: string = ''; //Nullable

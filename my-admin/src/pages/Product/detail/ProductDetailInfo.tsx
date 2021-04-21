@@ -38,7 +38,7 @@ export default observer(function ProductDetailInfo({ product }: Props) {
             <Grid.Column width={13}>
               <strong>Category: </strong>
               {product.productCategories.map((category) => (
-                <Label color="teal" horizontal>
+                <Label color="teal" horizontal key={category.id}>
                   {category.name}
                 </Label>
               ))}

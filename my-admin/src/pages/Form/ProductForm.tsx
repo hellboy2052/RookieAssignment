@@ -1,7 +1,7 @@
 import { Field, FieldArray, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
 import { Brand } from "../../api/models/brand";
 import { ProductFormValues } from "../../api/models/product";
@@ -10,21 +10,14 @@ import MySelectInput from "../../components/form/MySelectInput";
 import MyTextArea from "../../components/form/MyTextArea";
 import MyTextInput from "../../components/form/MyTextInput";
 import LoadingComponent from "../../components/LoadingComponent";
-
-const categoryOption = [
-  { text: "Laptop", value: "Laptop" },
-  { text: "Shoes", value: "Shoe" },
-];
-
-const brandOption = [
-  { text: "Asus", value: 1 },
-  { text: "Dell", value: 2 },
-];
+import * as Yup from "yup";
 
 export default observer(function ProductForm() {
+  const history = useHistory();
   const { brandStore, productStore, categoryStore } = useStore();
   const { brands, Boption, loadBrands } = brandStore;
   const { categories, Coption, loadCategories } = categoryStore;
+  const { createProduct, loadProducts } = productStore;
   const [product, setProduct] = useState<ProductFormValues>(
     new ProductFormValues()
   );
@@ -34,6 +27,36 @@ export default observer(function ProductForm() {
       loadCategories();
     }
   }, [brands.length, loadBrands, categories.length, loadCategories]);
+
+  const validationSchema = Yup.object({
+    name: Yup.string().required("The product name is required!"),
+    price: Yup.number()
+      .required("The product price is required!")
+      .moreThan(0, "should be more than 0"),
+    description: Yup.string().required(),
+    categoryName: Yup.lazy((val) =>
+      Array.isArray(val)
+        ? Yup.array().of(
+            Yup.string().required("The products category need to be provided!")
+          )
+        : Yup.string().required("The products category need to be provided!")
+    ),
+    brandId: Yup.number().required("The product's brand need to be provided"),
+  });
+
+  const handleFormSubmit = (product: ProductFormValues) => {
+    if (product.id == 0) {
+      createProduct(product).then(() => {
+        setTimeout(() => {
+          history.push(`/productslist`);
+        }, 2000);
+        loadProducts();
+      });
+    } else {
+      console.log(product);
+    }
+  };
+
   if (brands.length == 0 || Boption.length == 0 || Coption.length == 0)
     return <LoadingComponent content="Loading Form..." />;
 
@@ -43,7 +66,8 @@ export default observer(function ProductForm() {
       <Formik
         enableReinitialize
         initialValues={product}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleFormSubmit(values)}
+        validationSchema={validationSchema}
       >
         {({ handleSubmit, isValid, isSubmitting, dirty, values }) => (
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
@@ -73,7 +97,6 @@ export default observer(function ProductForm() {
                     ))
                   ) : (
                     <Button type="button" onClick={() => arrayHelpers.push("")}>
-                      {/* show this when user has removed all Categories from the list */}
                       Add a Category
                     </Button>
                   )}
@@ -88,8 +111,8 @@ export default observer(function ProductForm() {
             />
 
             <Button
-              //   disabled={isSubmitting || !dirty || !isValid}
-              //   loading={isSubmitting}
+              disabled={isSubmitting || !dirty || !isValid}
+              loading={isSubmitting}
               floated="right"
               positive
               type="submit"

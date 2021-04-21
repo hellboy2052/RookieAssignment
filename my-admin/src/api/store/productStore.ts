@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import consumer from "../consumer";
-import { Product } from "../models/product";
+import { Product, ProductFormValues } from "../models/product";
 
 export default class ProductStore {
     productRegistry = new Map<number, Product>();
@@ -62,6 +62,17 @@ export default class ProductStore {
         product.createdDate = new Date(product.createdDate!);
         product.updatedDate = new Date(product.updatedDate!);
         this.productRegistry.set(product.id, product);
+    }
+
+
+    createProduct = async (product: ProductFormValues) => {
+
+        try {
+            await consumer.Products.create(product);
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     setLoadingInitial = (state: boolean) => {

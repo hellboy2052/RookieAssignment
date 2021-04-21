@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { Brand } from './models/brand';
 import { Category } from './models/category';
-import { Product } from './models/product';
+import { Product, ProductFormValues } from './models/product';
 import { User, UserFormValues } from './models/user';
 import { store } from './store/store';
 const sleep = (delay: number) => {
@@ -37,6 +37,7 @@ const request = {
 const Products = {
     list: () => request.get<Product[]>("Products"),
     detail: (id: string) => request.get<Product>(`Products/${id}`),
+    create: (product: ProductFormValues) => request.post<void>("Products", product),
 }
 
 const Account = {
