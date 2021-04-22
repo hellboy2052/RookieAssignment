@@ -38,6 +38,7 @@ const Products = {
     list: () => request.get<Product[]>("Products"),
     detail: (id: string) => request.get<Product>(`Products/${id}`),
     create: (product: ProductFormValues) => request.post<void>("Products", product),
+    update: (product: ProductFormValues) => request.put<void>(`Products/${product.id}`, product),
 }
 
 const Account = {

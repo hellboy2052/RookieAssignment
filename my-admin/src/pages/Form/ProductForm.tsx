@@ -1,7 +1,7 @@
 import { Field, FieldArray, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
 import { Brand } from "../../api/models/brand";
 import { ProductFormValues } from "../../api/models/product";
@@ -17,16 +17,41 @@ export default observer(function ProductForm() {
   const { brandStore, productStore, categoryStore } = useStore();
   const { brands, Boption, loadBrands } = brandStore;
   const { categories, Coption, loadCategories } = categoryStore;
-  const { createProduct, loadProducts } = productStore;
+  const {
+    updateProduct,
+    createProduct,
+    loadProducts,
+    loadProduct,
+    loadingInitial,
+    setLoadingInitial,
+  } = productStore;
   const [product, setProduct] = useState<ProductFormValues>(
     new ProductFormValues()
   );
+
+  const { id } = useParams<{ id: string }>();
+
   useEffect(() => {
-    if (brands.length == 0 && categories.length == 0) {
-      loadBrands();
-      loadCategories();
+    if (id) {
+      loadProduct(id).then((product) => {
+        setProduct(
+          new ProductFormValues({
+            id: product!.id,
+            name: product!.name,
+            price: product!.price,
+            description: product!.description,
+            image: product!.image,
+            brandId: brands.find((x) => x.name == product!.brandName)!.id,
+            categoryName: product!.productCategories.map((x) => {
+              return x.name;
+            }),
+          })
+        );
+      });
+    } else {
+      setLoadingInitial(false);
     }
-  }, [brands.length, loadBrands, categories.length, loadCategories]);
+  }, [loadProduct, id, setLoadingInitial]);
 
   const validationSchema = Yup.object({
     name: Yup.string().required("The product name is required!"),
@@ -53,11 +78,20 @@ export default observer(function ProductForm() {
         loadProducts();
       });
     } else {
-      console.log(product);
+      updateProduct(product).then(() => {
+        setTimeout(() => {
+          history.push(`/products/${product.id}`);
+        }, 2000);
+      });
     }
   };
 
-  if (brands.length == 0 || Boption.length == 0 || Coption.length == 0)
+  if (
+    loadingInitial ||
+    brands.length == 0 ||
+    Boption.length == 0 ||
+    Coption.length == 0
+  )
     return <LoadingComponent content="Loading Form..." />;
 
   return (
@@ -86,6 +120,7 @@ export default observer(function ProductForm() {
                         <Field
                           component={() => (
                             <MySelectInput
+                              disable={id ? true : false}
                               options={Coption}
                               placeholder="Category"
                               label="Category"

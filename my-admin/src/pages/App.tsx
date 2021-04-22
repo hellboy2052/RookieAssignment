@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { Redirect, Route } from "react-router";
+import { Redirect, Route, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { Container, Grid } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
@@ -14,21 +14,29 @@ import ProductDetail from "./Product/detail/ProductDetail";
 import ProductList from "./Product/ProductList";
 
 function App() {
-  const { userStore, commonStore } = useStore();
+  const location = useLocation();
+  const { userStore, commonStore, brandStore, categoryStore } = useStore();
 
   useEffect(() => {
     if (commonStore.token) {
       userStore.getUser().finally(() => commonStore.setAppLoaded());
+      brandStore.loadBrands();
+      categoryStore.loadCategories();
     } else {
       commonStore.setAppLoaded();
     }
-  }, [commonStore, userStore]);
+  }, [
+    commonStore,
+    userStore,
+    brandStore,
+    categoryStore,
+  ]);
 
-  if(!commonStore.appLoaded) return <LoadingComponent />
+  if (!commonStore.appLoaded) return <LoadingComponent />;
 
   return (
     <>
-      <ToastContainer position="bottom-right" hideProgressBar/>
+      <ToastContainer position="bottom-right" hideProgressBar />
       <Route exact path="/" component={mainPage} />
       <Route
         path="/(.+)"
@@ -39,13 +47,27 @@ function App() {
                 <Grid.Column width={3}>
                   <Navbar />
                 </Grid.Column>
-                <Grid.Column width={13} style={{marginTop: "50px"}}>
+                <Grid.Column width={13} style={{ marginTop: "50px" }}>
                   <PrivateRoute path="/dashboard" component={DashBoard} />
-                  <PrivateRoute exact path="/products" component={() => <Redirect to="/productslist" />} />
+                  <PrivateRoute
+                    exact
+                    path="/products"
+                    component={() => <Redirect to="/productslist" />}
+                  />
                   <PrivateRoute path="/productslist/" component={ProductList} />
-                  <PrivateRoute path="/products/:id" component={ProductDetail} />
-                  <PrivateRoute path="/product-form" component={ProductForm} />
-                  <footer className="sticky-footer bg-white" style={{marginTop: "20px", height: "5%"}}>
+                  <PrivateRoute
+                    path="/products/:id"
+                    component={ProductDetail}
+                  />
+                  <PrivateRoute
+                    key={location.key}
+                    path={["/product-form", "/edit-product/:id"]}
+                    component={ProductForm}
+                  />
+                  <footer
+                    className="sticky-footer bg-white"
+                    style={{ marginTop: "20px", height: "5%" }}
+                  >
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">
                         <span>Copyright © Your Website 2021</span>

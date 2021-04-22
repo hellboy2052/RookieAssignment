@@ -36,7 +36,7 @@ export default class ProductStore {
         let product = this.getProduct(Number.parseInt(id));
         if (product) {
             this.selectedProduct = product;
-            return
+            return product;
         } else {
             this.setLoadingInitial(true);
             try {
@@ -69,6 +69,22 @@ export default class ProductStore {
 
         try {
             await consumer.Products.create(product);
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    updateProduct = async (product: ProductFormValues) => {
+
+        try {
+            await consumer.Products.update(product);
+            runInAction(() => {
+                if (product.id) {
+                    this.loadProducts()
+                    this.selectedProduct = this.getProduct(product.id);
+                }
+            })
         } catch (error) {
             console.log(error);
 

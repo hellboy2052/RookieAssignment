@@ -19,7 +19,7 @@ export default observer(function ProductTableItem({ product }: Props) {
         <Table.Cell>{format(product.updatedDate!, "dd MMM yyyy h:mm aa")}</Table.Cell>
         <Table.Cell width="3">
           <Button as={NavLink} to={`/products/${product.id}`} positive icon="eye" />
-          <Button icon="pencil" color="teal" />
+          <Button as={NavLink} to={`/edit-product/${product.id}`} icon="pencil" color="teal" />
           <Button icon="trash" color="red" />
         </Table.Cell>
       </Table.Row>

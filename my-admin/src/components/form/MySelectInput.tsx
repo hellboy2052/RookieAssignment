@@ -7,6 +7,7 @@ interface Props {
   name: string;
   options: any;
   label?: string;
+  disable?: boolean;
 }
 export default function MySelectInput(prop: Props) {
   const [field, meta, helpers] = useField(prop.name);
@@ -15,6 +16,7 @@ export default function MySelectInput(prop: Props) {
     <Form.Field error={meta.touched && !!meta.error}>
       <label>{prop.label}</label>
       <Select
+        disabled={prop.disable}
         clearable
         options={prop.options}
         value={field.value || null}

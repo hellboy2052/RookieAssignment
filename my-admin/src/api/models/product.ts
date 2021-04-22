@@ -32,7 +32,7 @@ export class ProductFormValues{
     description: string = ''; //Nullable
     image: string  = ''; //Nullable
     brandId: number | undefined;
-    categoryName: string[] = [];
+    categoryName?: string[] = [];
 
     constructor(product?: ProductFormValues){
         // For edit product

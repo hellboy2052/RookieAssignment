@@ -33,7 +33,7 @@ export default observer(function ProductDetailInfo({ product }: Props) {
           <Grid verticalAlign="middle">
             <Grid.Column width={3}>
               <strong>Brand: </strong>
-              <span>{product.price}</span>
+              <span>{product.brandName}</span>
             </Grid.Column>
             <Grid.Column width={13}>
               <strong>Category: </strong>
