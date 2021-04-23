@@ -114,7 +114,8 @@ export default observer(function ProductForm() {
               name="categoryName"
               render={(arrayHelpers) => (
                 <div className="field">
-                  {values.categoryName && values.categoryName.length > 0 ? (
+                  {values.categoryName &&
+                    values.categoryName.length > 0 &&
                     values.categoryName.map((category, index) => (
                       <div key={index}>
                         <Field
@@ -129,12 +130,10 @@ export default observer(function ProductForm() {
                           )}
                         />
                       </div>
-                    ))
-                  ) : (
-                    <Button type="button" onClick={() => arrayHelpers.push("")}>
+                    ))}
+                    {/* <Button type="button" onClick={() => arrayHelpers.push("")}>
                       Add a Category
-                    </Button>
-                  )}
+                    </Button> */}
                 </div>
               )}
             />

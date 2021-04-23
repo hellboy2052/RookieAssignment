@@ -15,7 +15,7 @@ export default class CategoryStore{
         try {
             const categories = await consumer.Categories.list();
             categories.forEach(category => {
-                this.setBrand(category);
+                this.setCategory(category);
                 this.setOption(category);
             })
         } catch (error) {
@@ -24,7 +24,7 @@ export default class CategoryStore{
         }
     }
 
-    setBrand = (category: Category) => {
+    setCategory = (category: Category) => {
         this.categories = [...this.categories, category]
     }
 

@@ -19,7 +19,7 @@ const navItem = [
       },
       {
         name: "Brand list",
-        path: "/Brand/",
+        path: "/brandslist",
       },
       {
         name: "Category list",

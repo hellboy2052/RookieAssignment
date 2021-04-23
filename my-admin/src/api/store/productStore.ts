@@ -1,4 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { number } from "yup/lib/locale";
 import consumer from "../consumer";
 import { Product, ProductFormValues } from "../models/product";
 
@@ -81,6 +83,8 @@ export default class ProductStore {
             await consumer.Products.update(product);
             runInAction(() => {
                 if (product.id) {
+                    console.log(product.id);
+                    
                     this.loadProducts()
                     this.selectedProduct = this.getProduct(product.id);
                 }
@@ -88,6 +92,20 @@ export default class ProductStore {
         } catch (error) {
             console.log(error);
 
+        }
+    }
+
+    deleteProduct = async (id: string) => {
+        this.setLoading(true);
+        try {
+            await consumer.Products.delete(id)
+            runInAction(() => {
+                this.productRegistry.delete(Number.parseInt(id));
+                this.setLoading(false);
+            })
+        } catch (error) {
+            console.log(error);
+            this.setLoading(false);
         }
     }
 
@@ -101,6 +119,10 @@ export default class ProductStore {
 
     clearSelectedProduct = () => {
         this.selectedProduct = undefined;
+    }
+
+    clearProducts = () => {
+        this.productRegistry.clear();
     }
 
 }

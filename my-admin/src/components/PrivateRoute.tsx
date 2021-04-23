@@ -12,7 +12,7 @@ export default function PrivateRoute({ component: Component, ...rest }: Props) {
   const {
     userStore: { isLoggedIn },
   } = useStore();
-
+  
   return (
     <Route
       {...rest}

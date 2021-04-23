@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Brand } from './models/brand';
+import { Brand, BrandFormValues } from './models/brand';
 import { Category } from './models/category';
 import { Product, ProductFormValues } from './models/product';
 import { User, UserFormValues } from './models/user';
@@ -39,6 +39,7 @@ const Products = {
     detail: (id: string) => request.get<Product>(`Products/${id}`),
     create: (product: ProductFormValues) => request.post<void>("Products", product),
     update: (product: ProductFormValues) => request.put<void>(`Products/${product.id}`, product),
+    delete: (id: string) => request.del<void>(`Products/${id}`)
 }
 
 const Account = {
@@ -48,6 +49,9 @@ const Account = {
 
 const Brands = {
     list: () => request.get<Brand[]>("Brand"),
+    detail: (id: string) => request.get<Brand>(`Brand/${id}`),
+    create: (brand: BrandFormValues) => request.post<void>("Brand", brand),
+    delete: (id: string) => request.del<void>(`Brand/${id}`)
 }
 
 const Categories = {

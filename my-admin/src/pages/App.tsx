@@ -6,7 +6,9 @@ import { Container, Grid } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
 import LoadingComponent from "../components/LoadingComponent";
 import PrivateRoute from "../components/PrivateRoute";
+import BrandList from "./Brand/BrandList";
 import DashBoard from "./dashboard/DashBoard";
+import BrandForm from "./Form/BrandForm";
 import ProductForm from "./Form/ProductForm";
 import mainPage from "./mainPage";
 import Navbar from "./Navbar";
@@ -15,24 +17,32 @@ import ProductList from "./Product/ProductList";
 
 function App() {
   const location = useLocation();
-  const { userStore, commonStore, brandStore, categoryStore } = useStore();
-
-  useEffect(() => {
-    if (commonStore.token) {
-      userStore.getUser().finally(() => commonStore.setAppLoaded());
-      brandStore.loadBrands();
-      categoryStore.loadCategories();
-    } else {
-      commonStore.setAppLoaded();
-    }
-  }, [
-    commonStore,
+  const {
     userStore,
+    commonStore: { token, setAppLoaded, appLoaded },
     brandStore,
     categoryStore,
-  ]);
+  } = useStore();
+  const { getUser } = userStore;
+  const { loadBrands, brands } = brandStore;
+  const { loadCategories, categories } = categoryStore;
 
-  if (!commonStore.appLoaded) return <LoadingComponent />;
+  useEffect(() => {
+    if (brands.length == 0) loadBrands();
+  }, [loadBrands, brands.length, brands]);
+
+  useEffect(() => {
+    if (categories.length == 0) loadCategories();
+  }, [loadCategories, categories.length, categories]);
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded());
+    } else {
+      setAppLoaded();
+    }
+  }, [token, getUser]);
+
+  if (!appLoaded) return <LoadingComponent />;
 
   return (
     <>
@@ -49,20 +59,32 @@ function App() {
                 </Grid.Column>
                 <Grid.Column width={13} style={{ marginTop: "50px" }}>
                   <PrivateRoute path="/dashboard" component={DashBoard} />
+                  <PrivateRoute path="/productslist" component={ProductList} />
+                  <PrivateRoute path="/brandslist" component={BrandList} />
                   <PrivateRoute
                     exact
                     path="/products"
                     component={() => <Redirect to="/productslist" />}
                   />
-                  <PrivateRoute path="/productslist/" component={ProductList} />
                   <PrivateRoute
                     path="/products/:id"
                     component={ProductDetail}
                   />
                   <PrivateRoute
-                    key={location.key}
+                    key={
+                      location.key
+                        ? location.key.concat("product")
+                        : location.key
+                    }
                     path={["/product-form", "/edit-product/:id"]}
                     component={ProductForm}
+                  />
+                  <PrivateRoute
+                    key={
+                      location.key ? location.key.concat("brand") : location.key
+                    }
+                    path={["/brand-form", "/edit-brand/:id"]}
+                    component={BrandForm}
                   />
                   <footer
                     className="sticky-footer bg-white"
