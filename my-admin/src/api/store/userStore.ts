@@ -1,21 +1,49 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { toast } from "react-toastify";
+import { StringLiteralLike } from "typescript";
 import { history } from "../..";
 import consumer from "../consumer";
-import { User, UserFormValues } from "../models/user";
+import { User, UserFormValues, UserData } from "../models/user";
 import { store } from "./store";
 
 
 export default class UserStore {
     user: User | null = null;
+    userRegistry = new Map<string, UserData>();
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this);
     }
 
+    get UserByUsername() {
+        return Array.from(this.userRegistry.values()).sort((a, b) =>
+            a.username.localeCompare(b.username))
+    }
+
 
     get isLoggedIn() {
         return !!this.user;
+    }
+
+    loadUser = async () => {
+        this.setLoadingInitial(true)
+
+        try {
+            const users = await consumer.Account.list();
+            users.forEach(user => {
+                this.setUser(user);
+            })
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+
+        }
+    }
+
+    setUser = (user: UserData) => {
+        this.userRegistry.set(user.username, user);
     }
 
     login = async (form: UserFormValues) => {
@@ -27,12 +55,12 @@ export default class UserStore {
                     store.commonStore.setToken(user.token);
                     runInAction(() => this.user = user)
                     history.push("/dashboard");
-                }else{
+                } else {
                     toast.error("Customer are not allowed");
                 }
-                
+
             });
-            
+
 
 
         } catch (error) {
@@ -56,6 +84,10 @@ export default class UserStore {
             console.log(error);
 
         }
+    }
+
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
     }
 
 }

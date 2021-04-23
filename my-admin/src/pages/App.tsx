@@ -4,6 +4,7 @@ import { Redirect, Route, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { Container, Grid } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
+import AdminRoute from "../components/AdminRoute";
 import LoadingComponent from "../components/LoadingComponent";
 import PrivateRoute from "../components/PrivateRoute";
 import BrandList from "./Brand/BrandList";
@@ -14,6 +15,7 @@ import mainPage from "./mainPage";
 import Navbar from "./Navbar";
 import ProductDetail from "./Product/detail/ProductDetail";
 import ProductList from "./Product/ProductList";
+import UserList from "./User/UserList";
 
 function App() {
   const location = useLocation();
@@ -85,6 +87,10 @@ function App() {
                     }
                     path={["/brand-form", "/edit-brand/:id"]}
                     component={BrandForm}
+                  />
+                  <AdminRoute
+                    path="/usersList"
+                    component={UserList}
                   />
                   <footer
                     className="sticky-footer bg-white"

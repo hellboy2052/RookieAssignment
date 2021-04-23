@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Brand, BrandFormValues } from './models/brand';
 import { Category } from './models/category';
 import { Product, ProductFormValues } from './models/product';
-import { User, UserFormValues } from './models/user';
+import { User, UserFormValues, UserData } from './models/user';
 import { store } from './store/store';
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -45,6 +45,7 @@ const Products = {
 const Account = {
     current: () => request.get<User>("api/Account"),
     login: (user: UserFormValues) => request.post<User>("api/Account/login", user),
+    list: () => request.get<UserData[]>("api/Account/List")
 }
 
 const Brands = {

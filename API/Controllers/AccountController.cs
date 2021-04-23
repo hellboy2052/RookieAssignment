@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
+
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -28,6 +28,7 @@ namespace API.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserVm>> Login(LoginVm loginVm)
         {
@@ -40,13 +41,14 @@ namespace API.Controllers
             if (result.Succeeded)
             {
                 var role = await _userManager.GetRolesAsync(user);
-                if(role.Count < 0) return BadRequest("Problem with getting user Role");
+                if (role.Count < 0) return BadRequest("Problem with getting user Role");
                 return createUserObject(user, role);
             }
 
             return BadRequest("Incorrect password");
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserVm>> Register(RegisterVm registerVm)
         {
@@ -85,7 +87,6 @@ namespace API.Controllers
             return BadRequest("Problem registering user");
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<UserVm>> GetCurrentUser()
         {
@@ -93,6 +94,23 @@ namespace API.Controllers
             if (user == null) return NotFound();
             var role = await _userManager.GetRolesAsync(user);
             return createUserObject(user, role);
+        }
+
+        [Authorize(Policy = "IsPermitRequire")]
+        [HttpGet("List")]
+        public async Task<ActionResult<List<AccountVm>>> GetAccounts()
+        {
+            var accounts = new List<AccountVm>();
+            var users = await _userManager.Users.Select(x => x).ToListAsync();
+
+            foreach (var user in users)
+            {
+                var role = await _userManager.GetRolesAsync(user);
+                accounts.Add(createAccountObject(user, role));
+            }
+            
+            if(accounts.Count < 0) return NotFound();
+            return accounts;
         }
 
 
@@ -104,6 +122,17 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
                 FullName = user.FullName,
+                Roles = roles
+            };
+        }
+        private AccountVm createAccountObject(User user, IList<string> roles)
+        {
+
+            return new AccountVm
+            {
+                Username = user.UserName,
+                Email = user.Email,
+                Fullname = user.FullName,
                 Roles = roles
             };
         }

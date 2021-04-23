@@ -37,11 +37,7 @@ const navItem = [
     sub: [
       {
         name: "User list",
-        path: "/users/list",
-      },
-      {
-        name: "Add User",
-        path: "/users/add-user",
+        path: "/usersList",
       },
     ],
   },
@@ -53,7 +49,14 @@ export default observer(function Navbar() {
 
   return (
     <>
-      <Sidebar className="fixed" inverted as={Menu} vertical visible={true} style={{width: "16%"}}>
+      <Sidebar
+        className="fixed"
+        inverted
+        as={Menu}
+        vertical
+        visible={true}
+        style={{ width: "16%" }}
+      >
         <Header
           as="h2"
           textAlign="center"
@@ -62,9 +65,14 @@ export default observer(function Navbar() {
         >
           Hello {user?.username}
         </Header>
-        {navItem.map((item) => (
-          <SubMenu key={navItem.indexOf(item)} item={item} />
-        ))}
+        {navItem.map((item) => {
+          if (item.name != "Users") {
+            return <SubMenu key={navItem.indexOf(item)} item={item} />;
+          }
+          if (item.name == "Users" && user?.roles[0] == "superadmin") {
+            return <SubMenu key={navItem.indexOf(item)} item={item} />;
+          }
+        })}
         <Menu.Item>
           <Button
             type="button"

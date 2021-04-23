@@ -13,7 +13,7 @@ export default observer(function BrandList() {
 
 
   if (brandStore.loadingInitial && brands.length == 0)
-    return <LoadingComponent content="Loading Products..." />;
+    return <LoadingComponent content="Loading Brands..." />;
 
   return (
     <>

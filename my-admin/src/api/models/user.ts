@@ -11,3 +11,10 @@ export interface UserFormValues {
     fullname?: string;
     username?: string;
 }
+
+export interface UserData {
+    email: string;
+    username: string;
+    fullname: string;
+    roles: string[];
+}
