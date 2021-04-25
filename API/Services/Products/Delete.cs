@@ -25,7 +25,7 @@ namespace API.Services.Products
             {
                 var Product = await _context.Products.FindAsync(request.Id);
 
-                if (Product == null) return ResultVm<Unit>.Failure("Failed to find a product \r\nIn Deleting process");
+                // if (Product == null) return ResultVm<Unit>.Failure("Failed to find a product \r\nIn Deleting process");
 
                 _context.Products.Remove(Product);
 
