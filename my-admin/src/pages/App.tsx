@@ -46,7 +46,7 @@ function App() {
     } else {
       setAppLoaded();
     }
-  }, [token, getUser, setAppLoaded]);
+  }, [token, getUser]);
 
   if (!appLoaded) return <LoadingComponent />;
 

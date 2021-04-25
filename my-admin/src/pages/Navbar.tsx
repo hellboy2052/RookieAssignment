@@ -48,7 +48,7 @@ const navItem = [
 ];
 export default observer(function Navbar() {
   const {
-    userStore: { user, logout },
+    userStore: { user, logout, isLoggedIn },
   } = useStore();
 
   return (
@@ -61,33 +61,37 @@ export default observer(function Navbar() {
         visible={true}
         style={{ width: "16%" }}
       >
-        <Header
-          as="h2"
-          textAlign="center"
-          color="green"
-          style={{ marginTop: "10px" }}
-        >
-          Hello {user?.username}
-        </Header>
-        {navItem.map((item) => {
-          if (item.name !== "Users") {
-            return <SubMenu key={navItem.indexOf(item)} item={item} />;
-          }
-          if (item.name === "Users" && user?.roles[0] === "superadmin") {
-            return <SubMenu key={navItem.indexOf(item)} item={item} />;
-          }
-          return null;
-        })}
-        <Menu.Item>
-          <Button
-            type="button"
-            color="instagram"
-            content="Logout"
-            fluid
-            positive
-            onClick={logout}
-          />
-        </Menu.Item>
+        {isLoggedIn && (
+          <>
+            <Header
+              as="h2"
+              textAlign="center"
+              color="green"
+              style={{ marginTop: "10px" }}
+            >
+              Hello {user?.username}
+            </Header>
+            {navItem.map((item) => {
+              if (item.name !== "Users") {
+                return <SubMenu key={navItem.indexOf(item)} item={item} />;
+              }
+              if (item.name === "Users" && user?.roles[0] === "superadmin") {
+                return <SubMenu key={navItem.indexOf(item)} item={item} />;
+              }
+              return null;
+            })}
+            <Menu.Item>
+              <Button
+                type="button"
+                color="instagram"
+                content="Logout"
+                fluid
+                positive
+                onClick={logout}
+              />
+            </Menu.Item>
+          </>
+        )}
       </Sidebar>
     </>
   );
