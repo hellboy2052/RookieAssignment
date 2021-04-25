@@ -1,12 +1,8 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { NavLink } from "react-router-dom";
-import { Button, Grid, Header } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 
-const buttonAdd = {
-  position: "absolute",
-  right: "1.6%"
-}
+
 export default observer(function UserHeader() {
   return (
     <Grid>

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
-import { Button, Grid, Image, Label, Segment } from "semantic-ui-react";
+import { Button, Grid, Label, Segment } from "semantic-ui-react";
 import { Product } from "../../../api/models/product";
 
 const textarea = {

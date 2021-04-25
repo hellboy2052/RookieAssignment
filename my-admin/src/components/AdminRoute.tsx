@@ -18,7 +18,7 @@ export default function AdminRoute({ component: Component, ...rest }: Props) {
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn && user!.roles[0] == "superadmin" ? <Component {...props} /> : <Redirect to="/dashboard" />
+        isLoggedIn && user!.roles[0] === "superadmin" ? <Component {...props} /> : <Redirect to="/dashboard" />
       }
     />
   );

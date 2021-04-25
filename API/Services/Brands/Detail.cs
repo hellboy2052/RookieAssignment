@@ -32,8 +32,6 @@ namespace API.Services.Brands
                     .ProjectTo<BrandVm>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                if(brand == null) return ResultVm<BrandVm>.Failure("Brand doesnt exist");
-                
                 return ResultVm<BrandVm>.Success(brand);
             }
         }

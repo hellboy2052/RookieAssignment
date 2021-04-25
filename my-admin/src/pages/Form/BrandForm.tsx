@@ -1,13 +1,10 @@
-import { Field, FieldArray, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
-import { Brand, BrandFormValues } from "../../api/models/brand";
-import { ProductFormValues } from "../../api/models/product";
+import { BrandFormValues } from "../../api/models/brand";
 import { useStore } from "../../api/store/store";
-import MySelectInput from "../../components/form/MySelectInput";
-import MyTextArea from "../../components/form/MyTextArea";
 import MyTextInput from "../../components/form/MyTextInput";
 import LoadingComponent from "../../components/LoadingComponent";
 import * as Yup from "yup";
@@ -18,7 +15,6 @@ export default observer(function BrandForm() {
   const {
     createBrand,
     loadBrand,
-    loadBrands,
     loadingInitial,
     setLoadingInitial,
     clearBrands,
@@ -47,7 +43,7 @@ export default observer(function BrandForm() {
   });
 
   const handleFormSubmit = (brand: BrandFormValues) => {
-    if (brand.id == 0) {
+    if (brand.id === 0) {
       createBrand(brand).then(() => {
         setTimeout(() => {
           history.push(`/brandslist`);

@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Grid, Icon, Image, Item, Segment } from "semantic-ui-react";
+import { Button, Grid, Icon, Image, Segment } from "semantic-ui-react";
 import { Product } from "../../../api/models/product";
 
 const IconCenterPosition = {

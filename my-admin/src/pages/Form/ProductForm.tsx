@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Header, Segment } from "semantic-ui-react";
-import { Brand } from "../../api/models/brand";
 import { ProductFormValues } from "../../api/models/product";
 import { useStore } from "../../api/store/store";
 import MySelectInput from "../../components/form/MySelectInput";
@@ -15,8 +14,8 @@ import * as Yup from "yup";
 export default observer(function ProductForm() {
   const history = useHistory();
   const { brandStore, productStore, categoryStore } = useStore();
-  const { brands, Boption, loadBrands } = brandStore;
-  const { categories, Coption, loadCategories } = categoryStore;
+  const { brands, Boption } = brandStore;
+  const { Coption } = categoryStore;
   const {
     updateProduct,
     createProduct,
@@ -41,7 +40,7 @@ export default observer(function ProductForm() {
             price: product!.price,
             description: product!.description,
             image: product!.image,
-            brandId: brands.find((x) => x.name == product!.brandName)!.id,
+            brandId: brands.find((x) => x.name === product!.brandName)!.id,
             categoryName: product!.productCategories.map((x) => {
               return x.name;
             }),
@@ -51,7 +50,7 @@ export default observer(function ProductForm() {
     } else {
       setLoadingInitial(false);
     }
-  }, [loadProduct, id, setLoadingInitial]);
+  }, [loadProduct, id, setLoadingInitial, brands]);
 
   const validationSchema = Yup.object({
     name: Yup.string().required("The product name is required!"),
@@ -70,7 +69,7 @@ export default observer(function ProductForm() {
   });
 
   const handleFormSubmit = (product: ProductFormValues) => {
-    if (product.id == 0) {
+    if (product.id === 0) {
       createProduct(product).then(() => {
         setTimeout(() => {
           history.push(`/productslist`);
@@ -88,9 +87,9 @@ export default observer(function ProductForm() {
 
   if (
     loadingInitial ||
-    brands.length == 0 ||
-    Boption.length == 0 ||
-    Coption.length == 0
+    brands.length === 0 ||
+    Boption.length === 0 ||
+    Coption.length === 0
   )
     return <LoadingComponent content="Loading Form..." />;
 

@@ -41,6 +41,10 @@ const navItem = [
       },
     ],
   },
+  {
+    name: "Test Error",
+    path: "/errors",
+  },
 ];
 export default observer(function Navbar() {
   const {
@@ -66,12 +70,13 @@ export default observer(function Navbar() {
           Hello {user?.username}
         </Header>
         {navItem.map((item) => {
-          if (item.name != "Users") {
+          if (item.name !== "Users") {
             return <SubMenu key={navItem.indexOf(item)} item={item} />;
           }
-          if (item.name == "Users" && user?.roles[0] == "superadmin") {
+          if (item.name === "Users" && user?.roles[0] === "superadmin") {
             return <SubMenu key={navItem.indexOf(item)} item={item} />;
           }
+          return null;
         })}
         <Menu.Item>
           <Button

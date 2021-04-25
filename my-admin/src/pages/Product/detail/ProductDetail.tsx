@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { Grid, Segment, Image } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 import { useStore } from "../../../api/store/store";
 import LoadingComponent from "../../../components/LoadingComponent";
 import ProductDetailHeader from "./ProductDetailHeader";
@@ -27,7 +27,7 @@ export default observer(function ProductDetail() {
 
   if (loadingInitial || !product)
     return <LoadingComponent content="Loading a Product..." />;
-    
+
   return (
     <Grid>
       <ProductDetailHeader product={product} />

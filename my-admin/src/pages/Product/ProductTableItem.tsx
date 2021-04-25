@@ -46,7 +46,7 @@ export default observer(function ProductTableItem({ product }: Props) {
           />
           <Button
             name={product.id}
-            loading={loading && target == product.id.toString()}
+            loading={loading && target === product.id.toString()}
             icon="trash"
             color="red"
             onClick={(e) => handleDelete(product.id.toString(), e)}

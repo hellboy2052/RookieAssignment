@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React from "react";
 import { Table } from "semantic-ui-react";
 import { useStore } from "../../api/store/store";
 import UserTableItem from "./UserTableItem";

@@ -1,4 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import { history } from '..';
 import { Brand, BrandFormValues } from './models/brand';
 import { Category } from './models/category';
 import { Product, ProductFormValues } from './models/product';
@@ -23,6 +25,48 @@ axios.interceptors.response.use(async res => {
     console.log(res);
 
     return res;
+}, (error: AxiosError) => {
+    const { data, status, config } = error.response!;
+
+    switch (status) {
+        case 400:
+
+            if (typeof data === 'string') {
+                toast.error(data);
+            }
+
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                history.push("/not-found")
+            }
+            if (data.errors) {
+                const modalStateErrors = [];
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modalStateErrors.push(data.errors[key]);
+                    }
+                }
+
+                throw modalStateErrors.flat();
+            } else {
+                toast.error(data);
+            }
+            break;
+        case 401:
+            toast.error('unauthorised');
+            break;
+        case 404:
+            history.push("/not-found");
+            break;
+        case 500:
+            store.commonStore.setServerError(data);
+            history.push('/server-error');
+            break;
+
+        default:
+            break;
+    }
+
+    return Promise.reject(error);
 });
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;

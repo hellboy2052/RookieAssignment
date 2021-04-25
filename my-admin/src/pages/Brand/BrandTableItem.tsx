@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React, { SyntheticEvent, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -36,7 +35,7 @@ export default observer(function BrandTableItem({ brand }: Props) {
           />
           <Button
             name={brand.id}
-            loading={loading && target == brand.id.toString()}
+            loading={loading && target === brand.id.toString()}
             icon="trash"
             color="red"
             onClick={(e) => handleDelete(brand.id.toString(), e)}

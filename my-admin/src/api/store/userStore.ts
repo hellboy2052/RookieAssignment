@@ -1,6 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { toast } from "react-toastify";
-import { StringLiteralLike } from "typescript";
 import { history } from "../..";
 import consumer from "../consumer";
 import { User, UserFormValues, UserData } from "../models/user";

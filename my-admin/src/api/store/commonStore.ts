@@ -24,6 +24,10 @@ export default class CommonStore {
         )
     }
 
+    setServerError = (error: ServerError) => {
+        this.error = error;
+    }
+
     setToken = (token: string | null) => {
         if(token) window.localStorage.setItem('jwt', token);
 

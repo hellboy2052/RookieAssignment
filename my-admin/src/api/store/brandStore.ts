@@ -64,8 +64,8 @@ export default class BrandStore {
         try {
             await consumer.Brands.delete(id)
             runInAction(() => {
-                this.brands = [...this.brands.filter(x => x.id != Number.parseInt(id))];
-                this.Boption = [...this.Boption.filter(x => x.value != id)]
+                this.brands = [...this.brands.filter(x => x.id !== Number.parseInt(id))];
+                this.Boption = [...this.Boption.filter(x => x.value !== id)]
                 this.setLoading(false);
             })
         } catch (error) {
@@ -75,7 +75,7 @@ export default class BrandStore {
     }
 
     private getBrand = (id: number) => {
-        return this.brands.find(x => x.id == id);
+        return this.brands.find(x => x.id === id);
     }
 
     setBrand = (brand: Brand) => {

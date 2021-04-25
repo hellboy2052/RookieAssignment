@@ -35,8 +35,6 @@ namespace API.Services.Products
                     .ProjectTo<ProductVm>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                if (product == null) return ResultVm<ProductVm>.Failure("Product doesnt exist!");
-
                 return ResultVm<ProductVm>.Success(product);
             }
         }

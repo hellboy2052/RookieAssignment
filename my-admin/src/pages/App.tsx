@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { Redirect, Route, useLocation } from "react-router";
+import { Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Container, Grid } from "semantic-ui-react";
 import { useStore } from "../api/store/store";
@@ -9,6 +10,9 @@ import LoadingComponent from "../components/LoadingComponent";
 import PrivateRoute from "../components/PrivateRoute";
 import BrandList from "./Brand/BrandList";
 import DashBoard from "./dashboard/DashBoard";
+import NotFound from "./Error/NotFound";
+import ServerError from "./Error/ServerError";
+import TestErrors from "./Error/TestError";
 import BrandForm from "./Form/BrandForm";
 import ProductForm from "./Form/ProductForm";
 import mainPage from "./mainPage";
@@ -30,11 +34,11 @@ function App() {
   const { loadCategories, categories } = categoryStore;
 
   useEffect(() => {
-    if (brands.length == 0) loadBrands();
+    if (brands.length === 0) loadBrands();
   }, [loadBrands, brands.length, brands]);
 
   useEffect(() => {
-    if (categories.length == 0) loadCategories();
+    if (categories.length === 0) loadCategories();
   }, [loadCategories, categories.length, categories]);
   useEffect(() => {
     if (token) {
@@ -42,7 +46,7 @@ function App() {
     } else {
       setAppLoaded();
     }
-  }, [token, getUser]);
+  }, [token, getUser, setAppLoaded]);
 
   if (!appLoaded) return <LoadingComponent />;
 
@@ -60,41 +64,48 @@ function App() {
                   <Navbar />
                 </Grid.Column>
                 <Grid.Column width={13} style={{ marginTop: "50px" }}>
-                  <PrivateRoute path="/dashboard" component={DashBoard} />
-                  <PrivateRoute path="/productslist" component={ProductList} />
-                  <PrivateRoute path="/brandslist" component={BrandList} />
-                  <PrivateRoute
-                    exact
-                    path="/products"
-                    component={() => <Redirect to="/productslist" />}
-                  />
-                  <PrivateRoute
-                    path="/products/:id"
-                    component={ProductDetail}
-                  />
-                  <PrivateRoute
-                    key={
-                      location.key
-                        ? location.key.concat("product")
-                        : location.key
-                    }
-                    path={["/product-form", "/edit-product/:id"]}
-                    component={ProductForm}
-                  />
-                  <PrivateRoute
-                    key={
-                      location.key ? location.key.concat("brand") : location.key
-                    }
-                    path={["/brand-form", "/edit-brand/:id"]}
-                    component={BrandForm}
-                  />
-                  <AdminRoute
-                    path="/usersList"
-                    component={UserList}
-                  />
+                  <Switch>
+                    <PrivateRoute path="/dashboard" component={DashBoard} />
+                    <PrivateRoute
+                      path="/productslist"
+                      component={ProductList}
+                    />
+                    <PrivateRoute path="/brandslist" component={BrandList} />
+                    <PrivateRoute
+                      exact
+                      path="/products"
+                      component={() => <Redirect to="/productslist" />}
+                    />
+                    <PrivateRoute
+                      path="/products/:id"
+                      component={ProductDetail}
+                    />
+                    <PrivateRoute
+                      key={
+                        location.key
+                          ? location.key.concat("product")
+                          : location.key
+                      }
+                      path={["/product-form", "/edit-product/:id"]}
+                      component={ProductForm}
+                    />
+                    <PrivateRoute
+                      key={
+                        location.key
+                          ? location.key.concat("brand")
+                          : location.key
+                      }
+                      path={["/brand-form", "/edit-brand/:id"]}
+                      component={BrandForm}
+                    />
+                    <PrivateRoute path="/errors" component={TestErrors} />
+                    <AdminRoute path="/usersList" component={UserList} />
+                    <Route path="/server-error" component={ServerError} />
+                    <Route component={NotFound} />
+                  </Switch>
                   <footer
                     className="sticky-footer bg-white"
-                    style={{ marginTop: "20px", height: "5%" }}
+                    style={{ marginTop: "20px" }}
                   >
                     <div className="container my-auto">
                       <div className="copyright text-center my-auto">

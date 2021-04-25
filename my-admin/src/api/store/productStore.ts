@@ -1,6 +1,4 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { AsyncLocalStorage } from "node:async_hooks";
-import { number } from "yup/lib/locale";
 import consumer from "../consumer";
 import { Product, ProductFormValues } from "../models/product";
 
