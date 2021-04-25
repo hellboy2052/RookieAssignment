@@ -32,5 +32,7 @@ namespace Domain
         public ICollection<Rate> rate { get; set; } = new List<Rate>();
 
         public ICollection<CategoryProduct> ProductCategories { get; set; } = new List<CategoryProduct>();
+    
+        public ICollection<Picture> Pictures { get; set; }
     }
 }
