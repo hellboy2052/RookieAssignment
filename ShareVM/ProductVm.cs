@@ -32,5 +32,7 @@ namespace ShareVM
         public ICollection<RateVm> rate { get; set; } = new List<RateVm>();
 
         public ICollection<CategoryVm> ProductCategories { get; set; }
+
+        public ICollection<PictureVm> Pictures { get; set; }
     }
 }

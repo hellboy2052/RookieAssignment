@@ -3,6 +3,7 @@ using AutoMapper;
 using ShareVM;
 using System.Linq;
 
+
 namespace API.core
 {
     public class MappingProfile : Profile
@@ -42,6 +43,8 @@ namespace API.core
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Product.Image))
                 .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Product.Brand.Name))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Product.Name));
+            // Picture
+            CreateMap<Picture, PictureVm>();
 
 
 

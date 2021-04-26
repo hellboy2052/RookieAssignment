@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
 using MediatR;
+using API.Services.Photo;
 
 namespace API.Controllers
 {
@@ -37,10 +38,41 @@ namespace API.Controllers
         // Create Product
         [Authorize(Policy = "IsPermitRequire")]
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(ProductFormVm productFormVm)
+        public async Task<IActionResult> CreateProduct([FromForm] ProductFormVm productFormVm)
         {
+            // Create product
+            var result = await Mediator.Send(new Create.Command { product = productFormVm });
 
-            return HandleResult(await Mediator.Send(new Create.Command { product = productFormVm }));
+            if (!result.IsSuccess)
+            {
+                return HandleResult(result);
+            }
+
+            // get id for adding picture
+            var proId = result.Value;
+
+            // Check if picture empty or not
+            if ((productFormVm.Pictures == null))
+            {
+                return HandleResult(result);
+            }
+
+            if (productFormVm.Pictures.Count < 1)
+            {
+                return HandleResult(result);
+            }
+            // Create picture
+            foreach (var item in productFormVm.Pictures)
+            {
+                var result2 = await Mediator.Send(new Add.Command { productId = proId, File = item });
+
+                // Check error
+                if (!result2.IsSuccess)
+                {
+                    return HandleResult(result2);
+                }
+            }
+            return HandleResult(result);
         }
 
         // Edit Product
@@ -57,8 +89,15 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
+            // Delete picture first then product
+            var result = await Mediator.Send(new API.Services.Photo.DeleteAll.Command { proId = id });
 
-            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
+            if (!result.IsSuccess)
+            {
+                return HandleResult(result);
+            }
+
+            return HandleResult(await Mediator.Send(new API.Services.Products.Delete.Command { Id = id }));
         }
 
 

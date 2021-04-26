@@ -12,7 +12,7 @@ namespace API.Services.Products
 {
     public class Create
     {
-        public class Command : IRequest<ResultVm<Unit>>
+        public class Command : IRequest<ResultVm<int>>
         {
             public ProductFormVm product { get; set; }
         }
@@ -25,7 +25,7 @@ namespace API.Services.Products
             }
         }
 
-        public class Handler : IRequestHandler<Command, ResultVm<Unit>>
+        public class Handler : IRequestHandler<Command, ResultVm<int>>
         {
             private readonly MyDbContext _context;
             public Handler(MyDbContext context)
@@ -33,7 +33,7 @@ namespace API.Services.Products
                 this._context = context;
             }
 
-            public async Task<ResultVm<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ResultVm<int>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var product = new Product
                 {
@@ -63,9 +63,9 @@ namespace API.Services.Products
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return ResultVm<Unit>.Failure("Failed to create Product");
+                if (!result) return ResultVm<int>.Failure("Failed to create Product");
 
-                return ResultVm<Unit>.Success(Unit.Value);
+                return ResultVm<int>.Success(product.Id);
             }
         }
     }

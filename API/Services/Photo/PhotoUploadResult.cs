@@ -1,4 +1,4 @@
-namespace API.Services.Picture
+namespace API.Services.Photo
 {
     public class PhotoUploadResult
     {

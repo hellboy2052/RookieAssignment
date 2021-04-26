@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace ShareVM
@@ -16,5 +17,7 @@ namespace ShareVM
         public int BrandId { get; set; }
 
         public List<string> CategoryName { get; set; }
+
+        public List<IFormFile> Pictures { get; set; }
     }
 }

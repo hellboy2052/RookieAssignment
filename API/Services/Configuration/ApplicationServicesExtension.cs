@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using API.Services.Products;
 using API.Services.Security;
-using API.Services.Picture;
+using API.Services.Photo;
 
 namespace API.Services.Configuration
 {
