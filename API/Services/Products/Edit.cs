@@ -46,7 +46,6 @@ namespace API.Services.Products
                 product.Name = request.Product.Name;
                 product.Price = request.Product.Price;
                 product.Description = request.Product.Description;
-                product.Image = request.Product.Image;
                 product.BrandId = request.Product.BrandId;
                 product.UpdatedDate = DateTime.Now;
 

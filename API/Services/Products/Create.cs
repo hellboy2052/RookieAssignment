@@ -40,7 +40,6 @@ namespace API.Services.Products
                     Name = request.product.Name,
                     Price = request.product.Price,
                     Description = request.product.Description,
-                    Image = request.product.Image,
                     BrandId = request.product.BrandId,
                     CreatedDate = DateTime.Now
                 };

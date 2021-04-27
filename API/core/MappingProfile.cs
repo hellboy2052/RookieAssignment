@@ -40,7 +40,7 @@ namespace API.core
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.User.UserName))
                 .ForMember(d => d.Fullname, o => o.MapFrom(s => s.User.FullName));
             CreateMap<OrderDetail, OrderDetailVm>()
-                .ForMember(d => d.Image, o => o.MapFrom(s => s.Product.Image))
+                .ForMember(d => d.Image, o => o.MapFrom(s => s.Product.Pictures.Any(x => x.IsMain)))
                 .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Product.Brand.Name))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Product.Name));
             // Picture

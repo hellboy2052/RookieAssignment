@@ -107,15 +107,117 @@ namespace API.Data
                     },
                     new Category
                     {
-                        Name = "Shoe"
-                    },
-                    new Category
-                    {
-                        Name = "Sport"
+                        Name = "Graphic"
                     },
                 };
 
                 if (!context.Categories.Any()) await context.Categories.AddRangeAsync(categories);
+
+                var pictures = new List<Picture>
+                {
+                    // p1
+                    new Picture
+                    {
+                        Id = "qhcveuwerz92thzgyuie",
+                        IsMain = true,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508228/qhcveuwerz92thzgyuie.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "g06u6etx3azpbkl49rsk",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508226/g06u6etx3azpbkl49rsk.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "boa6ldzscjcevhsch6lz",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508225/boa6ldzscjcevhsch6lz.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "xgvxvhd2rzhe9jneu5lt",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508227/xgvxvhd2rzhe9jneu5lt.jpg"
+                    },
+                    // p2
+                    new Picture
+                    {
+                        Id = "wa3hqfobn1adyfqnikwf",
+                        IsMain = true,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508664/wa3hqfobn1adyfqnikwf.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "sbsdsbubdblxsmakq0b0",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508662/sbsdsbubdblxsmakq0b0.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "t92rkjsal1r60xcuakvj",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508663/t92rkjsal1r60xcuakvj.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "pjrgzizdvz4aisdshyi7",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508663/pjrgzizdvz4aisdshyi7.jpg"
+                    },
+                    // p3
+                    new Picture
+                    {
+                        Id = "yz3vxxe6ygz6ptvuxmqs",
+                        IsMain = true,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508692/yz3vxxe6ygz6ptvuxmqs.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "ihisq69obhiiuvpgp5pv",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508690/ihisq69obhiiuvpgp5pv.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "v7m9otdx72leopzhytxo",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508690/v7m9otdx72leopzhytxo.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "zmidsfigd0x2875kburz",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508691/zmidsfigd0x2875kburz.jpg"
+                    },
+                    // p4
+                    new Picture
+                    {
+                        Id = "kf2bo2cfcd0o2fxokbwl",
+                        IsMain = true,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508719/kf2bo2cfcd0o2fxokbwl.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "mrdrwvxpeurrzmhdbbcm",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508717/mrdrwvxpeurrzmhdbbcm.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "wnf6j8qc5cadcknwrpqs",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508717/wnf6j8qc5cadcknwrpqs.jpg"
+                    },
+                    new Picture
+                    {
+                        Id = "xn0x9wqpewauewhnpkh9",
+                        IsMain = false,
+                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508718/xn0x9wqpewauewhnpkh9.jpg"
+                    },
+                };
+
+
 
                 var products = new List<Product>
                 {
@@ -124,7 +226,6 @@ namespace API.Data
                         Name = "Laptop Asus TUF Gaming FX506LH",
                         Price = 20000000,
                         Description = "Với sự mạnh mẽ, bền bỉ từ thiết kế vẻ ngoài lẫn bên trong cấu hình, Asus TUF Gaming FX506LH (HN002T) sẽ là một trợ thủ đắc lực của bạn trong trò chơi yêu thích và cả những tác vụ nặng khác",
-                        Image = "asus-uf-gaming-fx506lh-i5-hn002t-15-600x600.jpg",
                         Brand = brands[0],
                         CreatedDate = DateTime.Now,
                         ProductCategories = new List<CategoryProduct>
@@ -137,6 +238,13 @@ namespace API.Data
                             {
                                 Category = categories[2]
                             },
+                        },
+                        Pictures = new List<Picture>
+                        {
+                            pictures[0],
+                            pictures[1],
+                            pictures[2],
+                            pictures[3],
                         }
                     },
                     new Product
@@ -144,7 +252,6 @@ namespace API.Data
                         Name = "Asus VivoBook A512FL i5",
                         Price = 18090000,
                         Description = "Laptop Asus VivoBook A512FL (EJ569T) là chiếc laptop nhỏ gọn phù hợp với đối tượng học sinh, sinh viên hay nhân viên văn phòng. Chiếc máy được trang bị cấu hình mạnh mẽ đủ để bạn thoải mái sử dụng các ứng dụng văn phòng hiện nay và hỗ trợ tốt trong việc xử lí hình ảnh bằng Photoshop, Ai",
-                        Image = "asus-vivobook-a512fl-i5-10210u-8gb-512gb-2gb-mx250-9-217320-600x600.jpg",
                         Brand = brands[0],
                         CreatedDate = DateTime.Now,
                         ProductCategories = new List<CategoryProduct>
@@ -157,6 +264,13 @@ namespace API.Data
                             {
                                 Category = categories[1]
                             },
+                        },
+                        Pictures = new List<Picture>
+                        {
+                            pictures[4],
+                            pictures[5],
+                            pictures[6],
+                            pictures[7],
                         }
                     },
                     new Product
@@ -164,7 +278,6 @@ namespace API.Data
                         Name = "Laptop Dell Vostro 5402",
                         Price = 18890000,
                         Description = "Laptop Dell Vostro 5402 i5 (V4I5003W) là mẫu máy tính hướng đến đối tượng người dùng là học sinh sinh viên hoặc nhân viên văn phòng với cấu hình mạnh mẽ, đáp ứng tốt các nhu cầu thường ngày.",
-                        Image = "dell-vostro-5402-i5-v4i5003w-222320-102344-600x600.jpg",
                         Brand = brands[1],
                         CreatedDate = DateTime.Now,
                         ProductCategories = new List<CategoryProduct>
@@ -181,6 +294,13 @@ namespace API.Data
                             {
                                 Category = categories[2]
                             },
+                        },
+                        Pictures = new List<Picture>
+                        {
+                            pictures[8],
+                            pictures[9],
+                            pictures[10],
+                            pictures[11],
                         }
                     },
                     new Product
@@ -188,7 +308,6 @@ namespace API.Data
                         Name = "Laptop Dell Inspiron 3505 R3",
                         Price = 11990000,
                         Description = "Laptop Dell Inspiron 3505 R3 (Y1N1T1) với thiết kế trang nhã, hiện đại, hiệu năng đủ dùng cùng màn hình hiển thị sắc nét mang đến cho học sinh, sinh viên và dân văn phòng một sự lựa chọn phù hợp trong phân khúc giá rẻ.",
-                        Image = "dell-inspiron-3505-r3-y1n1t1-600x600.jpg",
                         Brand = brands[1],
                         CreatedDate = DateTime.Now,
                         ProductCategories = new List<CategoryProduct>
@@ -201,54 +320,28 @@ namespace API.Data
                             {
                                 Category = categories[1]
                             },
+                        },
+                        Pictures = new List<Picture>
+                        {
+                            pictures[12],
+                            pictures[13],
+                            pictures[14],
+                            pictures[15],
                         }
                     },
-                    new Product
-                    {
-                        Name = "GIÀY NIKE AIR ZOOM STRUCTURE 23 NAM - ĐEN TRẮNG",
-                        Price = 3490000,
-                        Description = "Giày Nike Air Zoom Structure 23 là mẫu giày được nâng cấp rất nhiều so với phiên bản trước đó: nhẹ hơn, khỏe khoắn hơn, mang lại trải nghiệm tuyệt vời cho người dùng",
-                        Image = "giay-nike-air-zoom-structure-23-nam-den-trang-01-800x800_0.jpg",
-                        Brand = brands[2],
-                        CreatedDate = DateTime.Now,
-                        ProductCategories = new List<CategoryProduct>
-                        {
-                            new CategoryProduct
-                            {
-                                Category = categories[3]
-                            },
-                            new CategoryProduct
-                            {
-                                Category = categories[4]
-                            },
-                        }
-                    },
-                    new Product
-                    {
-                        Name = "GIÀY NIKE AIR ZOOM STRUCTURE 23 NAM - ĐEN TRẮNG",
-                        Price = 3490000,
-                        Description = "Được thừa hưởng kiểu dáng thiết kế với đàn anh Boston 8 m trước- song ở phiên bản 9 m, các nhà sản xuất đã thêm vào công nghệ đế giữa LightStrike kết hợp với bộ đế Boost huyền thoại của Adidas, làm tăng gấp đôi khả năng hỗ trợ lực cho bàn chân so với phiên bản cũ",
-                        Image = "giay-adidas-adizero-boston-9-m-nam-den-cam-01-800x800_0.jpg",
-                        Brand = brands[3],
-                        CreatedDate = DateTime.Now,
-                        ProductCategories = new List<CategoryProduct>
-                        {
-                            new CategoryProduct
-                            {
-                                Category = categories[3]
-                            },
-                            new CategoryProduct
-                            {
-                                Category = categories[4]
-                            },
-                        }
-                    }
                 };
+
+
 
                 if (!context.Brands.Any() && !context.Categories.Any())
                 {
                     await context.Products.AddRangeAsync(products);
                 }
+
+
+
+
+
                 await context.SaveChangesAsync();
             }
         }

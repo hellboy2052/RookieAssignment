@@ -62,9 +62,9 @@ namespace API.Controllers
                 return HandleResult(result);
             }
             // Create picture
-            foreach (var item in productFormVm.Pictures)
+            foreach (var pic in productFormVm.Pictures)
             {
-                var result2 = await Mediator.Send(new Add.Command { productId = proId, File = item });
+                var result2 = await Mediator.Send(new Add.Command { productId = proId, File = pic });
 
                 // Check error
                 if (!result2.IsSuccess)
