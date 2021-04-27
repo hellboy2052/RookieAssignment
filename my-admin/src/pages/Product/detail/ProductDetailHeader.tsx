@@ -22,7 +22,7 @@ export default observer(function ProductDetailHeader({ product }: Props) {
     <Grid.Column width={5}>
       <Image
         fluid
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5RrstOx8dqsxf4Nckc4BUvoFiODJaq8f_oTLZ92DX3Hk_LvPG1l0bFARyvg&usqp=CAc"
+        src={product.pictures.find(p => p.isMain)!.url}
       />
 
       <Segment attached="top">

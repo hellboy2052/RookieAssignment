@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
-import { Button, Grid, Label, Segment } from "semantic-ui-react";
+import { Button, Grid, Label, Segment, Image, Divider } from "semantic-ui-react";
 import { Product } from "../../../api/models/product";
 
 const textarea = {
@@ -76,6 +76,14 @@ export default observer(function ProductDetailInfo({ product }: Props) {
               />
             </Grid.Column>
           </Grid>
+        </Segment>
+        <Divider hidden />
+        <Segment>
+          <Image.Group size="small">
+            {product.pictures.map((p, i) => (
+              <Image src={p.url} key={i} />
+            ))}
+          </Image.Group>
         </Segment>
       </Segment.Group>
     </Grid.Column>

@@ -10,6 +10,16 @@ import MyTextArea from "../../components/form/MyTextArea";
 import MyTextInput from "../../components/form/MyTextInput";
 import LoadingComponent from "../../components/LoadingComponent";
 import * as Yup from "yup";
+import Dropzone from "react-dropzone";
+
+const dropzoneStyle = {
+  width: "100%",
+  height: "auto",
+  borderWidth: 2,
+  borderColor: "rgb(102, 102, 102)",
+  borderStyle: "dashed",
+  borderRadius: 5,
+};
 
 export default observer(function ProductForm() {
   const history = useHistory();
@@ -28,24 +38,29 @@ export default observer(function ProductForm() {
     new ProductFormValues()
   );
 
+  const [loadingData, SetLoadingData] = useState(true);
+
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     if (id) {
       loadProduct(id).then((product) => {
-        setProduct(
-          new ProductFormValues({
-            id: product!.id,
-            name: product!.name,
-            price: product!.price,
-            description: product!.description,
-            image: product!.image,
-            brandId: brands.find((x) => x.name === product!.brandName)!.id,
-            categoryName: product!.productCategories.map((x) => {
-              return x.name;
-            }),
-          })
-        );
+        setTimeout(() => {
+          setProduct(
+            new ProductFormValues({
+              id: product!.id,
+              name: product!.name,
+              price: product!.price,
+              description: product!.description,
+              image: product!.image,
+              brandId: brands.find((x) => x.name === product!.brandName)!.id,
+              categoryName: product!.productCategories.map((x) => {
+                return x.name;
+              }),
+            })
+          );
+          SetLoadingData(false);
+        }, 1000);
       });
     } else {
       setLoadingInitial(false);
@@ -92,6 +107,8 @@ export default observer(function ProductForm() {
     Coption.length === 0
   )
     return <LoadingComponent content="Loading Form..." />;
+  
+  if(id && loadingData) return <LoadingComponent content="Loading Product Data..." />;
 
   return (
     <Segment clearing>
@@ -102,7 +119,14 @@ export default observer(function ProductForm() {
         onSubmit={(values) => handleFormSubmit(values)}
         validationSchema={validationSchema}
       >
-        {({ handleSubmit, isValid, isSubmitting, dirty, values }) => (
+        {({
+          handleSubmit,
+          isValid,
+          isSubmitting,
+          dirty,
+          values,
+          setFieldValue,
+        }) => (
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
             <MyTextInput name="name" placeholder="Name" />
             <MyTextInput type="number" name="price" placeholder="Price" />
@@ -113,6 +137,7 @@ export default observer(function ProductForm() {
               name="categoryName"
               render={(arrayHelpers) => (
                 <div className="field">
+                  {values.categoryName.length <= 0 && arrayHelpers.push("")}
                   {values.categoryName &&
                     values.categoryName.length > 0 &&
                     values.categoryName.map((category, index) => (
@@ -130,7 +155,7 @@ export default observer(function ProductForm() {
                         />
                       </div>
                     ))}
-                    {/* <Button type="button" onClick={() => arrayHelpers.push("")}>
+                  {/* <Button type="button" onClick={() => arrayHelpers.push("")}>
                       Add a Category
                     </Button> */}
                 </div>
@@ -143,6 +168,40 @@ export default observer(function ProductForm() {
               name="brandId"
             />
 
+            {/* Image */}
+            <div className="field">
+              <input
+                type="file"
+                id="file"
+                multiple
+                name="file"
+                onChange={(event) => {
+                  const files = event.target.files;
+                  if (files) {
+                    for (let i = 0; i < files.length; i++) {
+                      console.log(files[i].type);
+                      if (
+                        files[i].type === "image/png" ||
+                        files[i].type === "image/jpeg" ||
+                        files[i].type === "image/jpg"
+                      )
+                        setFieldValue(`pictures[${i}]`, files[i]);
+                    }
+                  }
+                }}
+              />
+            </div>
+            <div className="field">
+              {values.pictures &&
+                values.pictures.length > 0 &&
+                values.pictures.map((pic, i) => (
+                  <img
+                    key={i}
+                    style={{ height: "10%", width: "10%" }}
+                    src={URL.createObjectURL(pic)}
+                  />
+                ))}
+            </div>
             <Button
               disabled={isSubmitting || !dirty || !isValid}
               loading={isSubmitting}
@@ -161,6 +220,7 @@ export default observer(function ProductForm() {
           </Form>
         )}
       </Formik>
+      {/* Gallery image */}
     </Segment>
   );
 });

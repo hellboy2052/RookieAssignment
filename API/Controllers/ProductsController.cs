@@ -78,10 +78,38 @@ namespace API.Controllers
         // Edit Product
         [Authorize(Policy = "IsPermitRequire")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProduct(int id, ProductFormVm productFormVm)
+        public async Task<IActionResult> EditProduct(int id, [FromForm] ProductFormVm productFormVm)
         {
             productFormVm.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Product = productFormVm }));
+            var result = await Mediator.Send(new Edit.Command { Product = productFormVm });
+
+            if (!result.IsSuccess)
+            {
+                return HandleResult(result);
+            }
+
+            // Check if picture empty or not
+            if ((productFormVm.Pictures == null))
+            {
+                return HandleResult(result);
+            }
+
+            if (productFormVm.Pictures.Count < 1)
+            {
+                return HandleResult(result);
+            }
+            foreach (var pic in productFormVm.Pictures)
+            {
+                var result2 = await Mediator.Send(new Add.Command { productId = productFormVm.Id, File = pic });
+
+                // Check error
+                if (!result2.IsSuccess)
+                {
+                    return HandleResult(result2);
+                }
+            }
+
+            return HandleResult(result);
         }
 
         // Delete Product

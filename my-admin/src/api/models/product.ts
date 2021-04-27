@@ -16,6 +16,7 @@ export interface Product{
     isRate: boolean;
     rate: Rate[];
     productCategories: Category[];
+    pictures: Picture[];
 }
 
 
@@ -32,7 +33,8 @@ export class ProductFormValues{
     description: string = ''; //Nullable
     image: string  = ''; //Nullable
     brandId: number | undefined;
-    categoryName?: string[] = [""];
+    categoryName: string[] = [];
+    pictures?: Blob[] = [];
 
     constructor(product?: ProductFormValues){
         // For edit product
@@ -48,4 +50,10 @@ export class ProductFormValues{
     }
 
     
+}
+
+export interface Picture {
+    id: string;
+    url: string;
+    isMain: boolean;
 }

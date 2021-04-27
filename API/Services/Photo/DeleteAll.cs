@@ -39,6 +39,7 @@ namespace API.Services.Photo
                     if (result == null) return ResultVm<Unit>.Failure("Problem deleting picture from Cloudinary");
 
                     product.Pictures.Remove(item);
+                    _context.Remove(item);
 
                 }
 

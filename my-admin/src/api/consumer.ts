@@ -77,13 +77,46 @@ const request = {
     put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
 };
-
+// request.post<void>("Products", product)
 const Products = {
     list: () => request.get<Product[]>("Products"),
     detail: (id: string) => request.get<Product>(`Products/${id}`),
-    create: (product: ProductFormValues) => request.post<void>("Products", product),
-    update: (product: ProductFormValues) => request.put<void>(`Products/${product.id}`, product),
-    delete: (id: string) => request.del<void>(`Products/${id}`)
+    create: (product: ProductFormValues) => {
+        let formData = new FormData();
+        formData.append('name', product.name);
+        formData.append('price', product.price.toString());
+        formData.append('description', product.description);
+        formData.append('brandId', product.brandId!.toString());
+
+        product.categoryName!.forEach(cate => {
+            formData.append('categoryName[]', cate);
+        });
+        product.pictures?.forEach((pic: any, index) => {
+            formData.append(`pictures`, pic);
+        })
+        return axios.post<void>('Products', formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+    },
+    update: (product: ProductFormValues) => {
+        let formData = new FormData();
+        formData.append('name', product.name);
+        formData.append('price', product.price.toString());
+        formData.append('description', product.description);
+        formData.append('brandId', product.brandId!.toString());
+
+        product.categoryName!.forEach(cate => {
+            formData.append('categoryName[]', cate);
+        });
+        product.pictures?.forEach((pic: any, index) => {
+            formData.append(`pictures`, pic);
+        })
+        return axios.put<void>(`Products/${product.id}`, formData, {
+            headers: { 'Content-type': 'multipart/form-data' }
+        })
+    },
+    delete: (id: string) => request.del<void>(`Products/${id}`),
+    setMain: (id: string, proId: string) => request.post<void>(`Photo/${id}/setMain?proId=${proId}`, {})
 }
 
 const Account = {

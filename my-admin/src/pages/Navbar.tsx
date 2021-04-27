@@ -22,10 +22,6 @@ const navItem = [
         path: "/brandslist",
       },
       {
-        name: "Category list",
-        path: "/Categories/",
-      },
-      {
         name: "Add Product",
         path: "/product-form",
       },

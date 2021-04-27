@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
 using API.Services.Photo;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Policy = "IsPermitRequire")]
     public class PhotoController : BaseController
     {
         public PhotoController(IMediator mediator) : base(mediator)

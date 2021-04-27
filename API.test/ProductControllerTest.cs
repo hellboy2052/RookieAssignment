@@ -48,7 +48,7 @@ namespace API.test
             var dbContenxt = await GetDatabaseContext();
 
             var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<Domain.Brand, BrandVm>(It.IsAny<Domain.Brand>())).Returns(new BrandVm());
+            mapper.Setup(m => m.Map<List<Domain.Brand>, List<BrandVm>>(It.IsAny<List<Domain.Brand>>())).Returns(new List<BrandVm>() { new BrandVm { } });
 
             var query = new List.Query();
 
