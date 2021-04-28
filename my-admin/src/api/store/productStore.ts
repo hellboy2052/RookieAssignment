@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import consumer from "../consumer";
-import { Product, ProductFormValues } from "../models/product";
+import { Picture, Product, ProductFormValues } from "../models/product";
 
 export default class ProductStore {
     productRegistry = new Map<number, Product>();
@@ -82,7 +82,7 @@ export default class ProductStore {
             runInAction(() => {
                 if (product.id) {
                     console.log(product.id);
-                    
+
                     this.loadProducts()
                     this.selectedProduct = this.getProduct(product.id);
                 }
@@ -104,6 +104,46 @@ export default class ProductStore {
         } catch (error) {
             console.log(error);
             this.setLoading(false);
+        }
+    }
+    setMainPicture = async (picture: Picture, proId: string) => {
+        this.loading = true;
+        try {
+            await consumer.Products.setMain(picture.id, proId);
+            runInAction(() => {
+                if (proId && this.productRegistry.get(Number.parseInt(proId))!.pictures!.length != 0) {
+                    // Set false to the current main picture
+                    this.productRegistry.get(Number.parseInt(proId))!.pictures!.find(p => p.isMain)!.isMain = false;
+                    // Set true to the new main picture
+                    this.productRegistry.get(Number.parseInt(proId))!.pictures!.find(p => p.id === picture.id)!.isMain = true;
+
+                    this.loading = false;
+                }
+
+            })
+        } catch (error) {
+            runInAction(() => this.loading = false);
+            console.log(error);
+
+        }
+    }
+
+    deletePicture = async (picture: Picture, proId: string) => {
+        this.loading = true;
+        try {
+            await consumer.Products.deletePhoto(picture.id, proId);
+            runInAction(() => {
+                if (proId && this.productRegistry.get(Number.parseInt(proId))!.pictures!.length != 0) {
+                    this.productRegistry.get(Number.parseInt(proId))!.pictures = this.productRegistry.get(Number.parseInt(proId))!.pictures?.filter(p => p.id !== picture.id);
+                    this.loading = false;
+                }
+                this.loading = false;
+            })
+
+        } catch (error) {
+            runInAction(() => this.loading = false);
+            console.log(error);
+
         }
     }
 

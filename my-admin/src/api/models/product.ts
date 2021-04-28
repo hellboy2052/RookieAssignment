@@ -16,7 +16,7 @@ export interface Product{
     isRate: boolean;
     rate: Rate[];
     productCategories: Category[];
-    pictures: Picture[];
+    pictures?: Picture[];
 }
 
 

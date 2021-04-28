@@ -28,10 +28,16 @@ function App() {
     commonStore: { token, setAppLoaded, appLoaded },
     brandStore,
     categoryStore,
+    productStore
   } = useStore();
   const { getUser } = userStore;
   const { loadBrands, brands } = brandStore;
   const { loadCategories, categories } = categoryStore;
+  const {productRegistry, loadProducts} = productStore;
+
+  useEffect(() => {
+    if (productRegistry.size <= 1) loadProducts();
+  }, [productRegistry.size, loadProducts]);
 
   useEffect(() => {
     if (brands.length === 0) loadBrands();

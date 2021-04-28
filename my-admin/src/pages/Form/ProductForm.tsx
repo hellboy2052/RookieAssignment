@@ -2,15 +2,22 @@ import { Field, FieldArray, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
-import { Button, Header, Segment } from "semantic-ui-react";
-import { ProductFormValues } from "../../api/models/product";
+import {
+  Button,
+  Divider,
+  Header,
+  Segment,
+  Image,
+  Card,
+} from "semantic-ui-react";
+import { Picture, Product, ProductFormValues } from "../../api/models/product";
 import { useStore } from "../../api/store/store";
 import MySelectInput from "../../components/form/MySelectInput";
 import MyTextArea from "../../components/form/MyTextArea";
 import MyTextInput from "../../components/form/MyTextInput";
 import LoadingComponent from "../../components/LoadingComponent";
 import * as Yup from "yup";
-import Dropzone from "react-dropzone";
+import PictureCardForm from "../../components/PictureCardForm";
 
 const dropzoneStyle = {
   width: "100%",
@@ -39,9 +46,11 @@ export default observer(function ProductForm() {
   );
 
   const [loadingData, SetLoadingData] = useState(true);
+  const [productselect, setProductselect] = useState<Product | null>(null);
 
   const { id } = useParams<{ id: string }>();
 
+  
   useEffect(() => {
     if (id) {
       loadProduct(id).then((product) => {
@@ -59,6 +68,7 @@ export default observer(function ProductForm() {
               }),
             })
           );
+          setProductselect(product || null);
           SetLoadingData(false);
         }, 1000);
       });
@@ -82,6 +92,7 @@ export default observer(function ProductForm() {
     ),
     brandId: Yup.number().required("The product's brand need to be provided"),
   });
+  
 
   const handleFormSubmit = (product: ProductFormValues) => {
     if (product.id === 0) {
@@ -100,6 +111,10 @@ export default observer(function ProductForm() {
     }
   };
 
+  const handleSelectProduct = (product: Product) => {
+    setProductselect(product);
+  }
+
   if (
     loadingInitial ||
     brands.length === 0 ||
@@ -107,120 +122,141 @@ export default observer(function ProductForm() {
     Coption.length === 0
   )
     return <LoadingComponent content="Loading Form..." />;
-  
-  if(id && loadingData) return <LoadingComponent content="Loading Product Data..." />;
+
+  if (id && loadingData)
+    return <LoadingComponent content="Loading Product Data..." />;
 
   return (
-    <Segment clearing>
-      <Header content="Product details" sub color="teal" />
-      <Formik
-        enableReinitialize
-        initialValues={product}
-        onSubmit={(values) => handleFormSubmit(values)}
-        validationSchema={validationSchema}
-      >
-        {({
-          handleSubmit,
-          isValid,
-          isSubmitting,
-          dirty,
-          values,
-          setFieldValue,
-        }) => (
-          <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-            <MyTextInput name="name" placeholder="Name" />
-            <MyTextInput type="number" name="price" placeholder="Price" />
+    <Segment.Group>
+      <Segment clearing>
+        <Header content="Product details" sub color="teal" />
+        <Formik
+          enableReinitialize
+          initialValues={product}
+          onSubmit={(values) => handleFormSubmit(values)}
+          validationSchema={validationSchema}
+        >
+          {({
+            handleSubmit,
+            isValid,
+            isSubmitting,
+            dirty,
+            values,
+            setFieldValue,
+          }) => (
+            <Form
+              className="ui form"
+              onSubmit={handleSubmit}
+              autoComplete="off"
+            >
+              <MyTextInput name="name" placeholder="Name" />
+              <MyTextInput type="number" name="price" placeholder="Price" />
 
-            <MyTextArea rows={3} placeholder="Description" name="description" />
+              <MyTextArea
+                rows={3}
+                placeholder="Description"
+                name="description"
+              />
 
-            <FieldArray
-              name="categoryName"
-              render={(arrayHelpers) => (
-                <div className="field">
-                  {values.categoryName.length <= 0 && arrayHelpers.push("")}
-                  {values.categoryName &&
-                    values.categoryName.length > 0 &&
-                    values.categoryName.map((category, index) => (
-                      <div key={index}>
-                        <Field
-                          component={() => (
-                            <MySelectInput
-                              disable={id ? true : false}
-                              options={Coption}
-                              placeholder="Category"
-                              label="Category"
-                              name={`categoryName.${index}`}
-                            />
-                          )}
-                        />
-                      </div>
-                    ))}
-                  {/* <Button type="button" onClick={() => arrayHelpers.push("")}>
+              <FieldArray
+                name="categoryName"
+                render={(arrayHelpers) => (
+                  <div className="field">
+                    {values.categoryName.length <= 0 && arrayHelpers.push("")}
+                    {values.categoryName &&
+                      values.categoryName.length > 0 &&
+                      values.categoryName.map((category, index) => (
+                        <div key={index}>
+                          <Field
+                            component={() => (
+                              <MySelectInput
+                                disable={id ? true : false}
+                                options={Coption}
+                                placeholder="Category"
+                                label="Category"
+                                name={`categoryName.${index}`}
+                              />
+                            )}
+                          />
+                        </div>
+                      ))}
+                    {/* <Button type="button" onClick={() => arrayHelpers.push("")}>
                       Add a Category
                     </Button> */}
-                </div>
-              )}
-            />
-            <MySelectInput
-              options={Boption}
-              placeholder="Brand"
-              label="brand"
-              name="brandId"
-            />
-
-            {/* Image */}
-            <div className="field">
-              <input
-                type="file"
-                id="file"
-                multiple
-                name="file"
-                onChange={(event) => {
-                  const files = event.target.files;
-                  if (files) {
-                    for (let i = 0; i < files.length; i++) {
-                      console.log(files[i].type);
-                      if (
-                        files[i].type === "image/png" ||
-                        files[i].type === "image/jpeg" ||
-                        files[i].type === "image/jpg"
-                      )
-                        setFieldValue(`pictures[${i}]`, files[i]);
-                    }
-                  }
-                }}
+                  </div>
+                )}
               />
-            </div>
-            <div className="field">
-              {values.pictures &&
-                values.pictures.length > 0 &&
-                values.pictures.map((pic, i) => (
-                  <img
-                    key={i}
-                    style={{ height: "10%", width: "10%" }}
-                    src={URL.createObjectURL(pic)}
-                  />
-                ))}
-            </div>
-            <Button
-              disabled={isSubmitting || !dirty || !isValid}
-              loading={isSubmitting}
-              floated="right"
-              positive
-              type="submit"
-              content="Submit"
-            />
-            <Button
-              as={Link}
-              to="/productslist"
-              floated="right"
-              type="button"
-              content="Cancel"
-            />
-          </Form>
-        )}
-      </Formik>
-      {/* Gallery image */}
-    </Segment>
+              <MySelectInput
+                options={Boption}
+                placeholder="Brand"
+                label="brand"
+                name="brandId"
+              />
+
+              {/* Image */}
+              <div className="field">
+                <input
+                  type="file"
+                  id="file"
+                  multiple
+                  name="file"
+                  onChange={(event) => {
+                    const files = event.target.files;
+                    if (files) {
+                      for (let i = 0; i < files.length; i++) {
+                        console.log(files[i].type);
+                        if (
+                          files[i].type === "image/png" ||
+                          files[i].type === "image/jpeg" ||
+                          files[i].type === "image/jpg"
+                        )
+                          setFieldValue(`pictures[${i}]`, files[i]);
+                      }
+                    }
+                  }}
+                />
+              </div>
+              <div className="field">
+                {values.pictures &&
+                  values.pictures.length > 0 &&
+                  values.pictures.map((pic, i) => (
+                    <img
+                      key={i}
+                      style={{ height: "10%", width: "10%" }}
+                      src={URL.createObjectURL(pic)}
+                    />
+                  ))}
+              </div>
+              <Button
+                disabled={isSubmitting || !dirty || !isValid}
+                loading={isSubmitting}
+                floated="right"
+                positive
+                type="submit"
+                content="Submit"
+              />
+              <Button
+                as={Link}
+                to="/productslist"
+                floated="right"
+                type="button"
+                content="Cancel"
+              />
+            </Form>
+          )}
+        </Formik>
+        {/* Gallery image */}
+      </Segment>
+      {id && productselect && productselect!.pictures!.length > 0 && (
+        <>
+          <Divider hidden />
+          <Segment>
+            <Card.Group itemsPerRow={6}>
+              <PictureCardForm product={productselect} setPicture={handleSelectProduct}/>
+            </Card.Group>
+          </Segment>
+        </>
+      )}
+    </Segment.Group>
   );
 });

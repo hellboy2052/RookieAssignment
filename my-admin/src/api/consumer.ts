@@ -116,7 +116,8 @@ const Products = {
         })
     },
     delete: (id: string) => request.del<void>(`Products/${id}`),
-    setMain: (id: string, proId: string) => request.post<void>(`Photo/${id}/setMain?proId=${proId}`, {})
+    setMain: (id: string, proId: string) => request.post<void>(`Photo/${id}/setMain?proId=${proId}`, {}),
+    deletePhoto: (id: string, proId: string) => request.del<void>(`Photo/${id}?proId=${proId}`),
 }
 
 const Account = {
