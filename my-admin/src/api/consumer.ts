@@ -12,7 +12,7 @@ const sleep = (delay: number) => {
     })
 }
 
-axios.defaults.baseURL = "https://localhost:5002/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use(config => {
     const token = store.commonStore.token;
@@ -21,7 +21,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async res => {
-    await sleep(1000);
+    if (process.env.NODE_ENV === "development") await sleep(1000);
     console.log(res);
 
     return res;

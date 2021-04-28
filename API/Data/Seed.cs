@@ -113,109 +113,6 @@ namespace API.Data
 
                 if (!context.Categories.Any()) await context.Categories.AddRangeAsync(categories);
 
-                var pictures = new List<Picture>
-                {
-                    // p1
-                    new Picture
-                    {
-                        Id = "qhcveuwerz92thzgyuie",
-                        IsMain = true,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508228/qhcveuwerz92thzgyuie.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "g06u6etx3azpbkl49rsk",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508226/g06u6etx3azpbkl49rsk.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "boa6ldzscjcevhsch6lz",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508225/boa6ldzscjcevhsch6lz.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "xgvxvhd2rzhe9jneu5lt",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508227/xgvxvhd2rzhe9jneu5lt.jpg"
-                    },
-                    // p2
-                    new Picture
-                    {
-                        Id = "wa3hqfobn1adyfqnikwf",
-                        IsMain = true,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508664/wa3hqfobn1adyfqnikwf.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "sbsdsbubdblxsmakq0b0",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508662/sbsdsbubdblxsmakq0b0.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "t92rkjsal1r60xcuakvj",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508663/t92rkjsal1r60xcuakvj.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "pjrgzizdvz4aisdshyi7",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508663/pjrgzizdvz4aisdshyi7.jpg"
-                    },
-                    // p3
-                    new Picture
-                    {
-                        Id = "yz3vxxe6ygz6ptvuxmqs",
-                        IsMain = true,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508692/yz3vxxe6ygz6ptvuxmqs.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "ihisq69obhiiuvpgp5pv",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508690/ihisq69obhiiuvpgp5pv.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "v7m9otdx72leopzhytxo",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508690/v7m9otdx72leopzhytxo.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "zmidsfigd0x2875kburz",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508691/zmidsfigd0x2875kburz.jpg"
-                    },
-                    // p4
-                    new Picture
-                    {
-                        Id = "kf2bo2cfcd0o2fxokbwl",
-                        IsMain = true,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508719/kf2bo2cfcd0o2fxokbwl.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "mrdrwvxpeurrzmhdbbcm",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508717/mrdrwvxpeurrzmhdbbcm.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "wnf6j8qc5cadcknwrpqs",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508717/wnf6j8qc5cadcknwrpqs.jpg"
-                    },
-                    new Picture
-                    {
-                        Id = "xn0x9wqpewauewhnpkh9",
-                        IsMain = false,
-                        Url = "https://res.cloudinary.com/dgqhbb0np/image/upload/v1619508718/xn0x9wqpewauewhnpkh9.jpg"
-                    },
-                };
 
 
 
@@ -239,13 +136,6 @@ namespace API.Data
                                 Category = categories[2]
                             },
                         },
-                        Pictures = new List<Picture>
-                        {
-                            pictures[0],
-                            pictures[1],
-                            pictures[2],
-                            pictures[3],
-                        }
                     },
                     new Product
                     {
@@ -265,13 +155,6 @@ namespace API.Data
                                 Category = categories[1]
                             },
                         },
-                        Pictures = new List<Picture>
-                        {
-                            pictures[4],
-                            pictures[5],
-                            pictures[6],
-                            pictures[7],
-                        }
                     },
                     new Product
                     {
@@ -295,13 +178,6 @@ namespace API.Data
                                 Category = categories[2]
                             },
                         },
-                        Pictures = new List<Picture>
-                        {
-                            pictures[8],
-                            pictures[9],
-                            pictures[10],
-                            pictures[11],
-                        }
                     },
                     new Product
                     {
@@ -321,13 +197,6 @@ namespace API.Data
                                 Category = categories[1]
                             },
                         },
-                        Pictures = new List<Picture>
-                        {
-                            pictures[12],
-                            pictures[13],
-                            pictures[14],
-                            pictures[15],
-                        }
                     },
                 };
 

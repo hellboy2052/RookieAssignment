@@ -27,6 +27,9 @@ export default function SubMenu({ item }: Props) {
 
   const openSub = () => setstate(!state);
 
+  // Disable test error when in production
+  if(process.env.NODE_ENV === "production" && item.name === "Test Error") return null;
+
   return (
     <>
       <Menu.Item
