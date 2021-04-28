@@ -29,10 +29,9 @@ namespace API.Services.Brands
             public async Task<ResultVm<BrandVm>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var brand = await _context.Brands
-                    .ProjectTo<BrandVm>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                return ResultVm<BrandVm>.Success(brand);
+                return ResultVm<BrandVm>.Success(_mapper.Map<Domain.Brand, BrandVm>(brand));
             }
         }
     }

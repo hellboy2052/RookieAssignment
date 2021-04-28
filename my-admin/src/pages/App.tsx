@@ -25,12 +25,11 @@ function App() {
   const location = useLocation();
   const {
     userStore,
-    commonStore: { token, setAppLoaded, appLoaded },
+    commonStore,
     brandStore,
     categoryStore,
     productStore
   } = useStore();
-  const { getUser } = userStore;
   const { loadBrands, brands } = brandStore;
   const { loadCategories, categories } = categoryStore;
   const {productRegistry, loadProducts} = productStore;
@@ -47,14 +46,14 @@ function App() {
     if (categories.length === 0) loadCategories();
   }, [loadCategories, categories.length, categories]);
   useEffect(() => {
-    if (token) {
-      getUser().finally(() => setAppLoaded());
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
     } else {
-      setAppLoaded();
+      commonStore.setAppLoaded();
     }
-  }, [token, getUser]);
+  }, [commonStore, userStore]);
 
-  if (!appLoaded) return <LoadingComponent />;
+  if (!commonStore.appLoaded) return <LoadingComponent />;
 
   return (
     <>

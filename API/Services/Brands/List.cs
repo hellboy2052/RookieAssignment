@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ShareVM;
@@ -29,7 +30,8 @@ namespace API.Services.Brands
             {
                 var brands = await _context.Brands
                     .ToListAsync();
-                return ResultVm<List<BrandVm>>.Success(_mapper.Map<List<Domain.Brand>, List<BrandVm>>(brands));
+                var brandVms = _mapper.Map<List<Brand>, List<BrandVm>>(brands);
+                return ResultVm<List<BrandVm>>.Success(brandVms);
             }
         }
     }

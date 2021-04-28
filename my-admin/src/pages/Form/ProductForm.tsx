@@ -7,10 +7,9 @@ import {
   Divider,
   Header,
   Segment,
-  Image,
   Card,
 } from "semantic-ui-react";
-import { Picture, Product, ProductFormValues } from "../../api/models/product";
+import { Product, ProductFormValues } from "../../api/models/product";
 import { useStore } from "../../api/store/store";
 import MySelectInput from "../../components/form/MySelectInput";
 import MyTextArea from "../../components/form/MyTextArea";
@@ -19,14 +18,7 @@ import LoadingComponent from "../../components/LoadingComponent";
 import * as Yup from "yup";
 import PictureCardForm from "../../components/PictureCardForm";
 
-const dropzoneStyle = {
-  width: "100%",
-  height: "auto",
-  borderWidth: 2,
-  borderColor: "rgb(102, 102, 102)",
-  borderStyle: "dashed",
-  borderRadius: 5,
-};
+
 
 export default observer(function ProductForm() {
   const history = useHistory();
@@ -224,6 +216,7 @@ export default observer(function ProductForm() {
                       key={i}
                       style={{ height: "10%", width: "10%" }}
                       src={URL.createObjectURL(pic)}
+                      alt=""
                     />
                   ))}
               </div>
