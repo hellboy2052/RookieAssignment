@@ -74,7 +74,7 @@ namespace API.Controllers
 
             if (result.Succeeded)
             {
-                var result2 = await _userManager.AddToRoleAsync(user, "member");
+                var result2 = await _userManager.AddToRoleAsync(user, "customer");
             }
             else
             {

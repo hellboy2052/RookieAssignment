@@ -6,7 +6,7 @@ export interface Product{
     name: string;
     price: number;
     description: string;
-    image: string;
+    image: string | null;
     brandName: string;
     createdDate: Date | null;
     updatedDate: Date | null;
@@ -31,7 +31,7 @@ export class ProductFormValues{
     name: string = '';
     price: number = 0;
     description: string = ''; //Nullable
-    image: string  = ''; //Nullable
+    image: string | null  = ''; //Nullable
     brandId: number | undefined;
     categoryName: string[] = [];
     pictures?: Blob[] = [];

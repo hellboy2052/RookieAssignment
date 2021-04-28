@@ -22,7 +22,7 @@ export default observer(function ProductDetailHeader({ product }: Props) {
     <Grid.Column width={5}>
       <Image
         fluid
-        src={product.pictures!.length > 0 && product.pictures && product.pictures.find(p => p.isMain)!.url || "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg"}
+        src={product.image || "https://dominionmartialarts.com/wp-content/uploads/2017/04/default-image-620x600.jpg"}
       />
 
       <Segment attached="top">

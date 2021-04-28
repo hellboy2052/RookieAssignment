@@ -5,7 +5,7 @@
     ViewData["css"] = "/css/product.css";
 }
 
-<script>console.log("hello @ViewData["brandname"]")</script>
+@* <script>console.log("hello @ViewData["brandname"]")</script> *@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
@@ -14,7 +14,7 @@
                 {
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card">
-                            <img class="card-img-top" src="~/img/main-image/@product.Image" alt="Card image cap" />
+                            <img class="card-img-top" src="@product.Image" alt="Card image cap" />
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <a href="/home/product/@product.Id" title="View Product">@product.Name</a>

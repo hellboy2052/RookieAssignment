@@ -13,7 +13,8 @@ namespace ShareVM
 
         public string Description { get; set; }
 
-
+        public string Image { get; set; }
+        
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
@@ -33,5 +34,6 @@ namespace ShareVM
         public ICollection<CategoryVm> ProductCategories { get; set; }
 
         public ICollection<PictureVm> Pictures { get; set; }
+        public ICollection<string> Images { get; set; }
     }
 }

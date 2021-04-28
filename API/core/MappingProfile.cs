@@ -32,7 +32,9 @@ namespace API.core
                 .ForMember(p => p.IsRate,
                     o => o.MapFrom(s => s.rate.Any(x => x.user.UserName == currentUsername)))
                 .ForMember(p => p.currentRate,
-                    o => o.MapFrom(s => s.rate.FirstOrDefault(x => x.user.UserName == currentUsername).rate));
+                    o => o.MapFrom(s => s.rate.FirstOrDefault(x => x.user.UserName == currentUsername).rate))
+                .ForMember(p => p.Image, o => o.MapFrom(s => s.Pictures.FirstOrDefault(x => x.IsMain).Url))
+                .ForMember(p => p.Images, o => o.MapFrom(s => s.Pictures.Select(x => x.Url)));
             // Profile
             CreateMap<User, ProfileVm>();
             // Order
@@ -40,7 +42,7 @@ namespace API.core
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.User.UserName))
                 .ForMember(d => d.Fullname, o => o.MapFrom(s => s.User.FullName));
             CreateMap<OrderDetail, OrderDetailVm>()
-                .ForMember(d => d.Image, o => o.MapFrom(s => s.Product.Pictures.Any(x => x.IsMain)))
+                .ForMember(d => d.Image, o => o.MapFrom(s => s.Product.Pictures.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(d => d.BrandName, o => o.MapFrom(s => s.Product.Brand.Name))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Product.Name));
             // Picture

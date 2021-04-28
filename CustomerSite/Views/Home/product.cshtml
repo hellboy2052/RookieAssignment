@@ -6,61 +6,7 @@
     ViewData["js"] = "js/productdetail.js";
 }
 
-@* <div class="wrapper">
-    
-    <main>
-        <div id="shopify-section-product-template" class="shopify-section">
-            <div class="single-product-area mt-80 mb-80">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="product-details-large" id="ProductPhoto">
-                                <img id="ProductPhotoImg" class="product-zoom" src="~/img/main-image/@Model.Image" />
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="single-product-content">
-                                <form method="post" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data">
-                                    <input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" />
-                                    <div class="product-details">
-                                        <h1 class="single-product-name">
-                                            @Model.Name
-                                        </h1>
-                                        <div class="single-product-reviews">
-                                            <span class="shopify-product-reviews-badge" data-id="1912078270534"></span>
-                                        </div>
-                                        <div class="single-product-price">
-                                            <div class="product-discount">
-                                                <span class="price" id="ProductPrice"><span class="money">@Model.Price</span></span>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            @Model.Description
-                                        </div>
-                                        <div class="single-product-action">
-                                            <div class="product-add-to-cart">
-                                                <span class="control-label">Quantity</span>
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" type="text" name="quantity" value="1" />
-                                                </div>
-                                                <div class="add">
-                                                    <button type="submit" class="add-to-cart ajax-spin-cart" id="AddToCart">
-                                                        <i class="ion-bag"></i>
-                                                        <span class="list-cart-title cart-title" id="AddToCartText">Add to cart</span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-</div> *@
+
 <!--Section: Block Content-->
 <section class="mb-5">
    <div class="row">
@@ -71,9 +17,9 @@
                @* Main image *@
                <div class="col-12 mb-0">
                   <figure class="view overlay rounded z-depth-1 main-img">
-                     <a href="~/img/main-image/@Model.Image"
+                     <a href="@Model.Image"
                         data-size="710x823">
-                     <img src="~/img/main-image/@Model.Image"
+                     <img src="@Model.Image"
                         class="img-fluid z-depth-1">
                      </a>
                   </figure>
@@ -81,15 +27,17 @@
                @* Image gallery *@
                <div class="col-12">
                   <div class="row">
-                     <div class="col-3">
-                        
-                        <div class="view overlay rounded z-depth-1 gallery-item">
-                           <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-                              class="img-fluid">
-                           <div class="mask rgba-white-slight"></div>
+                      @foreach (var item in Model.Pictures)
+                      {
+                        <div class="col-3">
+                            <div class="view overlay rounded z-depth-1 gallery-item">
+                                <img src="@item.Url"
+                                    class="img-fluid">
+                                <div class="mask rgba-white-slight"></div>
+                            </div>
                         </div>
-                       
-                     </div>
+                      }
+                     
                      <div class="col-3">
                      </div>
                      <div class="col-3">

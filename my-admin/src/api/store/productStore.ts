@@ -116,7 +116,10 @@ export default class ProductStore {
                     this.productRegistry.get(Number.parseInt(proId))!.pictures!.find(p => p.isMain)!.isMain = false;
                     // Set true to the new main picture
                     this.productRegistry.get(Number.parseInt(proId))!.pictures!.find(p => p.id === picture.id)!.isMain = true;
-
+                    // Set main picture new url
+                    this.productRegistry.get(Number.parseInt(proId))!.image! = this.productRegistry.get(Number.parseInt(proId))!.pictures!.find(p => p.isMain)!.url; 
+                    console.log(this.productRegistry.get(Number.parseInt(proId)));
+                    
                     this.loading = false;
                 }
 
