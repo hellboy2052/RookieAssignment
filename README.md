@@ -13,6 +13,9 @@
 - Microsoft Azure.
 ## Service
 - Cloudinary
+## Demo
+- Admin Site : ***https://saef09900ca43f4fdfa17064.z23.web.core.windows.net/***
+- Customer Site : ***https://customersite6aa4832720f04dc48543de490ec3c7c3.azurewebsites.net/***
 ## Main structure and functionality
 ### API
 - Contains API queries and commands to provide and manipulate data from database.
