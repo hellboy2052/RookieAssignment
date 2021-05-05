@@ -31,7 +31,7 @@ namespace API.Services.Configuration
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithOrigins("http://localhost:3000");
+                        .WithOrigins(config["Admin:Default"]);
                 });
             });
             services.AddMediatR(typeof(List.Handler).Assembly);

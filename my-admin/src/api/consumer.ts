@@ -22,8 +22,6 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async res => {
     if (process.env.NODE_ENV === "development") await sleep(1000);
-    console.log(res);
-
     return res;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response!;
